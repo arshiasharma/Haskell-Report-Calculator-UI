@@ -1,0 +1,265 @@
+\documentclass{article}
+
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fullpage}
+\usepackage[usenames]{color}
+\usepackage{hyperref}
+\usepackage{listings}
+  \hypersetup{
+    colorlinks = true,
+    urlcolor = blue,       % color of external links using \href
+    linkcolor= blue,       % color of internal links 
+    citecolor= blue,       % color of links to bibliography
+    filecolor= blue,        % color of file links
+    }
+    
+\usepackage{listings}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstloadlanguages{Python}
+\lstset{frame=tb,
+  language=haskell,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+\lstset{frame=tb,
+  language=Python,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+\lstset{frame=tb,
+  language=C++,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+\title{CPSC-354, Programming Languages Report}
+\author{Arshia Sharma \\ Chapman University}
+
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This report will discuss three key topics in Programming Languages: What is Haskell, its benefits and uses, the theory involved with Programming Languages in regards to Discrete Mathematics and other methodologies, and a mini-project.  \ldots 
+\end{abstract}
+
+\tableofcontents
+
+\section{Introduction}\label{intro}
+
+Replace Section~\ref{intro} with your own short introduction. 
+
+
+\section{Haskell}\label{haskell}
+
+As with anything new, especially a new coding language, let us start at the beginning. Before starting this course, I had several questions as to what programming languages even was. I had heard many things from my friends how have taken this course and had no idea what they meant by Lambda Calculus, functional programming, or parsing. Some questions beginners as myself, starting their journey into programming language, specifically relating to Haskell, may include:
+\begin{enumerate}
+    \item What is Haskell?
+    \item What is the difference between Haskell and other programming languages we have covered in other classes so far?
+    \item Where to start with Haskell?
+    \item What are type classes and monads?
+    \item What more can I do in Haskell that I cannot do as easily with other languages?
+    
+\end{enumerate}
+\noindent
+In this section of the report, we will be answering those questions, as well as key concepts and reminders of programming techniques that are commonly used in the Haskell language.
+
+\subsection{Let us Start at the Beginning}
+
+\subsubsection{What is Haskell?}
+So what exactly is Haskell and why should programmers learn how to use it? Haskell is not the typical or "common" imperative programming language you may have used before such as Python, Java, or C++. Instead, Haskell is a purely functional programming language developed in the late 1980s by scholars to better communicate their theories and ideas \cite{UPenn}. What is a functional program you may ask? Well, if you are familiar with Excel or SQL, the main idea is the same! Functional programming focuses on a single expression where our main focus is on what we are solving rather than on how to solve the issue at hand \cite{Haskell.org}. We will dive into more examples between the difference of functional programming languages such as Haskell and imperative programming languages such as Python further in this report after we discuss one other main key aspect of Haskell: what is Haskell used for and why is it important for us as programmers?
+
+\medskip\noindent
+\subsubsection{Why is Haskell Important?}
+Haskell is used in various projects and applications used at companies such as Facebook, Target, and NASA to name a few \cite{serokell.io}. One of the most popular and useful uses of Haskell is Sigma, one of Facebook's software applications which catches malware and spam on Facebook's platform and removes it to protect users from attacks. \cite{Facebook Engineering}. Alongside protecting users on social media, Haskell also opens doors to a new framework of thinking and problem solving for programmers. 
+
+\medskip\noindent
+Haskell re-enforces the idea of the importance of understanding data types, how important discrete mathematics is to computer science to demonstrate how simple mathematical formulas, such as addition and multiplication, are programmed, and brings a philosophic mindset to a field that typically does not go into difficult questions such as "What is language but a string of characters". This new abstract way of thinking and an unfamiliar language may be daunting at first, with the tools already in a programmers kit, such as familiarity with functions, data types, and recursion, let us dive into some examples of Haskell to apply what we know and what more we can add with Haskell.
+
+\subsection{Haskell Review of Concepts and Tutorial}
+
+To have the best grasp of Haskell, let us review three key concepts from our computer science journey so far and how they compare in Haskell:
+
+\begin{enumerate}
+    \item Functions and Loops in Python and C++
+    \item Recursion, recursion, recursion
+    \item Discrete Mathematics and its importance in Haskell
+\end{enumerate}
+
+\subsubsection{Functions and Loops}
+Functions are a fairly common tool when it comes to programming in Python and other imperative languages. They are extremely helpful to the run-time, efficiency, and the organization or flow of code since with the use of parameters and best coding practices, functions at its core, reduces repetitions of code. Loops such as for, do-while, and while loops also allows programmers to iterate through arrays, lists, and sequences of numbers to perform calculations or return information to the user. Let's look at an example of function and loops in Python and C++ that returns the harmonic number of an integer. 
+
+\paragraph{Functions in Python}
+
+\begin{lstlisting}[language=Python]
+
+#Python function to calculate Harmonic Numbers
+def harmonic(x) :
+    if(x < 1):
+        return 0
+    harmonic = 1
+    for i in range(2, x+1) :
+        harmonic += 1 / i
+    return harmonic
+
+#main
+harmonic(5)
+harmonic(8)
+\end{lstlisting}
+
+
+\paragraph{Functions in C++}
+\begin{lstlisting}
+
+#include <iostream>
+using namespace std;
+ 
+// C++ function to calculate Harmonic Numbers
+double harmonic(int x)
+{
+    if(x < 1){
+        return 0;
+    }
+    double harmonic = 1.00;
+    for (int i = 2; i <= x; i++) {
+        harmonic += (double)1 / i;
+    }
+ 
+    return harmonic;
+}
+// main
+int main()
+{
+    cout<<harmonic(5);
+    cout<<harmonic(8);
+}
+\end{lstlisting}
+\noindent
+These two functions both calculate the Harmonic Number of a given value, in our cases 5 and 8, by using a for loop to iterate through the given range of numbers. The formula of to find Harmonic Numbers is relatively simple \cite{Harmonic Numbers}:
+
+\[ \sum_{k=1}^{\infty}\frac{1}{k}  = \frac{1}{1} + \frac{1}{2} + \frac{1}{3} + \frac{1}{4} + \frac{1}{5} + \frac{1}{6} + \frac{1}{7} + \frac{1}{8} + \cdots + \frac{1}{n} \]
+
+\noindent
+If you are already familiar with loops and functions, this is also fairly simple, the functions exactly follows the rules of the formula: it checks if the value in main is greater than 1, if it is less, it returns zero, else, it continuously adds each fraction together until it reaches the inputted value in a for loop. Excluding empty lines and curly brackets, the function is only 7 lines of code! Surprisingly, in Haskell, it can be even shorter. Here we have our first lesson when comparing Haskell to imperative languages - there are no loops in Haskell. Functions themselves are treated as arguments/variables within the code and are used in place a loops. Let's look at how Harmonic Numbers are determined in Haskell to see this concept firsthand: 
+
+\paragraph{Functions in Haskell}
+\begin{lstlisting}
+
+harmonic :: Fractional a => a -> a 
+harmonic 1 = 1 
+harmonic i = 1/i + harmonic (i-1)
+\end{lstlisting}
+
+\noindent
+Now in Haskell, the same function can be repeated used using our good friend recursion, which we review in 2.2.2, in three relatively short lines of code. To familiarize yourself a bit with type casting, we will discuss that topic further in 2.3.2 to better understand the first line of code \cite{Haskell.org Fractional}. As we can see, functions in Haskell are used in place of loops programmers are used to with imperative languages! In that case, let us dive back into a review of what recursion is and another common application of it.
+
+\subsubsection{Recursion, Recursion, Recursion}
+Almost every computer science or engineering student learned about recursion the same way with the popular Fibonacci Sequence: 1, 1, 2, 3, 5, 8, 13, 21, etc. where we repeatedly add each number together in a pattern. 1+1 = 2, 1+2 = 3, 2+3=5, and so on. The mathematical formula is as follows:
+
+\[ \sum_{k=2}^{\infty}F_{n}  = F_{n-1} - F_{n-2} \]
+\noindent
+where $F_{1}$ = 1 and $F_{0}$ = 0 for all positive integers. As noted in the formula above, F is called within its own formula where F is referenced within itself as long as the conditions are true. This formula can also be easily replicated in Python as well.
+
+\begin{lstlisting}[language=Python]
+def fibonacci(n):
+    if n <= 1:
+        return n
+    else:
+        return fibonacci(n-1) + fibonacci(n-2)
+# main
+print(fibonacci(5))
+\end{lstlisting}
+\noindent
+As we know from our previous section 2.2.1, recursion is heavily used in Haskell in place of loops. The Python code from above replicates that mentality, which is extremely similar to the syntax used to define the Fibonacci Sequence in Haskell:
+
+\begin{lstlisting}[language=haskell]
+-- Fibonacci Sequence in Haskell
+fib 0 = 0
+fib 1 = 1
+fib n = fib (n-1) + fib (n-2)
+\end{lstlisting}
+\noindent
+Haskell relies on recursion throughout its functionality and the first step into the world of Haskell and becoming an official Haskeller starts with reminding yourself how functions and loops are used as one in Haskell with the use of recursively calling the function in place of a loop. Once you master this train of thought, the language becomes more readable and you gain confidence in tackling the first lesson of Haskell.
+
+\subsubsection{Discrete Mathematics}
+
+\subsection{Key Concepts of Haskell}
+You'll be hearing these phrases a lot during your educational trip with Haskell!
+\subsubsection{Haskell as a Lazy programming language}
+\subsubsection{Haskell and Type Classes}
+\subsubsection{Haskell and Monads}
+
+\subsection{Haskell and Lambda-Calculus}
+\subsection{Introduction into the Haskell Project}
+
+
+
+\section{Programming Languages Theory}
+
+In this section you will show what you learned about the theory of programming languages. 
+
+\section{Project}
+
+In this section you will describe a short project. It can either be in Haskell or of a theoretical nature,
+
+\section{Conclusions}\label{conclusions}
+Short conclusion. 
+
+\begin{thebibliography}{99}
+\bibitem[PL]{PL} \href{https://github.com/alexhkurz/programming-languages-2021/blob/main/README.md}{Programming Languages 2021}, Chapman University, 2021.
+\bibitem[Haskell.org]{Haskell.org} \href{https://wiki.haskell.org/Introduction#What_is_functional_programming.3F}{What is functional programming?}, Haskell.org, 2021.
+\bibitem[UPenn]{UPenn} \href{https://www.cis.upenn.edu/~cis194/fall16/}{CIS 194: Introduction to Haskell}, University of Pennsylvania, 2016.
+\bibitem[serokell.io]{serokell.io} \href{https://serokell.io/blog/top-software-written-in-haskell}{Software Written in Haskell: Stories of Success}, serokell.io, 2019.
+\bibitem[Facebook Engineering]{Facebook Engineering} \href{https://engineering.fb.com/2015/06/26/security/fighting-spam-with-haskell/}{Fighting spam with Haskell}, Facebook Engineering, 2015.
+\bibitem[Harmonic Numbers]{Harmonic Numbers} \href{https://mathworld.wolfram.com/HarmonicNumber.html}{Harmonic Number}, Wolfram, 2021.
+\bibitem[Haskell.org Fractional]{Haskell.org Fractional} \href{https://www.haskell.org/tutorial/numbers.html}{Numeric Coercions and Overloaded Literals}, Haskell.org, 2021.
+\end{thebibliography}
+
+
+
+\end{document}
