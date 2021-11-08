@@ -181,7 +181,7 @@ int main()
 \noindent
 These two functions both calculate the Harmonic Number of a given value, in our cases 5 and 8, by using a for loop to iterate through the given range of numbers. The formula of to find Harmonic Numbers is relatively simple \cite{Harmonic Numbers}:
 
-\[ \sum_{k=1}^{\infty}\frac{1}{k}  = \frac{1}{1} + \frac{1}{2} + \frac{1}{3} + \frac{1}{4} + \frac{1}{5} + \frac{1}{6} + \frac{1}{7} + \frac{1}{8} + \cdots + \frac{1}{n} \]
+\[ \sum_{k=1}^{n}\frac{1}{k}  = \frac{1}{1} + \frac{1}{2} + \frac{1}{3} + \frac{1}{4} + \frac{1}{5} + \frac{1}{6} + \frac{1}{7} + \frac{1}{8} + \cdots + \frac{1}{n} \]
 
 \noindent
 If you are already familiar with loops and functions, this is also fairly simple, the functions exactly follows the rules of the formula: it checks if the value in main is greater than 1, if it is less, it returns zero, else, it continuously adds each fraction together until it reaches the inputted value in a for loop. Excluding empty lines and curly brackets, the function is only 7 lines of code! Surprisingly, in Haskell, it can be even shorter. Here we have our first lesson when comparing Haskell to imperative languages - there are no loops in Haskell. Functions themselves are treated as arguments/variables within the code and are used in place of loops. Let's look at how Harmonic Numbers are determined in Haskell to see this concept firsthand: 
@@ -200,9 +200,15 @@ Now in Haskell, the same function can be repeated used using our good friend rec
 \subsubsection{Recursion, Recursion, Recursion}
 Almost every computer science or engineering student learned about recursion the same way, with the popular Fibonacci Sequence: 1, 1, 2, 3, 5, 8, 13, 21, etc. where we repeatedly add each number together in a pattern. 1+1 = 2, 1+2 = 3, 2+3=5, and so on. The mathematical formula is as follows:
 
-\[ \sum_{k=2}^{\infty}F_{n}  = F_{n-1} - F_{n-2} \]
+\begin{align}
+fib(0) & = 0\\
+fib(1) & = 1\\
+fib(n+2) & = fib(n) + fib(n+1)
+\end{align}
+
 \noindent
-where $F_{1}$ = 1 and $F_{0}$ = 0 for all positive integers. As noted in the formula above, F is called within its own formula where F is referenced within itself as long as the conditions are true. This formula can also be easily replicated in Python as well.
+As noted in the third line of the formula above, $fib(n+2)$, $fib$ is called within itself as long as the conditions are true. For example, if $n = 0$, the formula would be: $fib(2) = fib(0) + fib(1) = 1$, where we are calling the $fib$ function within itself.
+This formula can also be easily replicated in Python as well.
 
 \begin{lstlisting}[language=Python]
 def fib(i):
@@ -252,7 +258,7 @@ The three examples above displays how an element is assigned to a set and if the
 
 $$Odd \ \stackrel{\rm def}{=} \ \{ n\in\mathbb N \mid \exists  m\in\mathbb N\,.\, (2\cdot m) + 1 = n \}.$$
 
-\noindent The $\exists$ symbol represents existence, where if there exists an element $m$ in the set of natural numbers $N$, if true, 2 multiplied by $m$ = $n$ and $n$ is an even number or 2 multiplied by $m$ plus 1 = $n$ and $n$ is an odd number. 
+\noindent The $\exists$ symbol represents existence, where if there exists an element $m$ in the set of natural numbers $\mathbb N$, if true, 2 multiplied by $m$ = $n$ and $n$ is an even number or 2 multiplied by $m$ plus 1 = $n$ and $n$ is an odd number. 
 
 \medskip\noindent
  Sets also incorporate basic mathematical operations such as and, or, and not, which are also referred to as intersection, union, and negation, respectfully. A table of these set operations, Boolean logic, and mathematical notation is displayed below for a refresh of these core theories.
@@ -283,17 +289,20 @@ $$Odd \ \stackrel{\rm def}{=} \ \{ n\in\mathbb N \mid \exists  m\in\mathbb N\,.\
 
  $$ Belongs To \ \stackrel{\rm def}{=} L_1\subseteq L_2 = \{w\in\Sigma^\ast \mid w\in L_1 \textrm{ implies } w\in L_2\}= \{w\in\Sigma^\ast \mid L_1(w) \implies L_2(w) = 1\}.$$
 
- $$Not Belongs To \ \stackrel{\rm def}{=} L_1\not\subset L_2 = \{w\in\Sigma^\ast \mid w\in L_1 \textrm{ negaties } w\in L_2\}= \{w\in\Sigma^\ast \mid L_1(w) \neg L_2(w) = 1\}.$$
+ $$Not Belongs To \ \stackrel{\rm def}{=} L_1\not\subset L_2 = \{w\in\Sigma^\ast \mid w\in L_1 \textrm{ negates } w\in L_2\}= \{w\in\Sigma^\ast \mid \neg L_1(w) \wedge L_2(w) = 1\}.$$
 
 \paragraph{Types of Numbers}
 
-As referenced in the previous section, you may have noticed in our definition of even and odd numbers, we referenced the set of all natural numbers. This means that our odd and even number all belong, or are elements, in the set of natural numbers. So what are the natural numbers? Are there more sets of numbers? There are four set of numbers you may come across in Haskell: the set of all natural numbers (N), positive natural numbers (P), integers (Z), and rational numbers (Q).
+As referenced in the previous section, you may have noticed in our definition of even and odd numbers, we referenced the set of all natural numbers. This means that our odd and even number all belong, or are elements, in the set of natural numbers. So what are the natural numbers? Are there more sets of numbers? There are four set of numbers you may come across in Haskell: the set of all natural numbers ($\mathbb N$), positive natural numbers ($\mathbb P$), integers ($\mathbb Z$), and rational numbers ($\mathbb Q$).
 
 \medskip\noindent
-The set of all natural numbers contains all whole values from 0 to infinity: N = \{0, 1, 2, 3, ..., $\infty$\}. The set of all positive natural numbers contains all whole values from 1 to infinity: P = \{1, 2, 3, ..., $\infty$\}. The set of integers contains all whole values from negative infinity to positive infinity: Z = \{-$\infty$,..., -2, -1, 0, 1, 2,..., $\infty$\}. The set of all rational numbers are pairs of an integer and positive number (Z, P) where Q is equal to all pairs of an integer and positive number that can be divisible to produce a whole integer with no decimal points. 
+The set of all natural numbers contains all whole values starting from 0: $\mathbb N$ = \{0, 1, 2, 3, 4, 5, ...\}. The set of all positive natural numbers contains all whole values starting from 1: $\mathbb P$ = \{1, 2, 3, 4, 5, ...\}. The set of integers contains all whole values, negative or positive: $\mathbb Z$ = \{..., -2, -1, 0, 1, 2,...\}. The set of all rational numbers are pairs of an integer and positive number ($\mathbb Z$, $\mathbb P$) where $\mathbb Q$ is equal to all pairs of an integer and positive number that can be divisible to produce a whole integer with no decimal points. 
 
 \medskip\noindent
-There are other sets of numbers such as irrational (I), real (R), and complex (C) numbers as well. Although these sets have not been used in our learning of Haskell so far, it is still important to note that are sets that include all sorts of numbers. These sets also compare directly to different data types in programming languages such as C++, where the set of integers are signed ints, the set of of natural numbers are unsigned ints. 
+There are other sets of numbers such as irrational ($\mathbb I$), real ($\mathbb R$), and complex ($\mathbb C$) numbers as well. Although these sets have not been used in our learning of Haskell so far, it is still important to note that are sets that include all sorts of numbers. These sets also compare directly to different data types in programming languages such as C++, where the set of integers are signed integers, the set of of natural numbers are unsigned integers. 
+
+\paragraph{Connection between Haskell and Discrete Math}
+The topics of sets, logic, mathematical notation, and types of numbers are important to consider while tackling Haskell and higher level computer science concepts going forward in your career. Haskell directly uses concepts such as implementing natural, positive, integers, and rational numbers in Haskell to prove arithmetic operations such as addition, subtraction, multiplication, and division as we do in the first assignment of this class, creating a simple Calculator. In fact, discrete mathematics first introduces the idea of 0 (O) and +1 (S), which is the backbone of our Calculator, which is further discussed in 2.3.2. Most of the mathematical concepts discussed in discrete mathematics is used as the background structure of programming languages where an abstract thought process is used to develop programming languages as a whole. Understanding sets and logical operations that can occur will aid your understanding in how to utilize sets of numbers. Learning mathematical notation will come in handy to grasp formulas you may come across in research, expand your skill set, and help to communicate your ideas to other computer scientists as well.
 
 \subsection{Key Concepts of Haskell}
 
@@ -322,7 +331,7 @@ sqrt(5, 3)
 sqrt(5, -4)
 \end{lstlisting}
 \noindent
-Since types in Python are defaulted for us, the default return statement for our code above would result in a float. sqrt(4, 1) = 2.0 and sqrt(5, 3) would be about 2.24. However, for sqrt(5, -4), the function returns -1 since the inputs were not True for either expressions. You may be wondering why another Boolean expression was included in this script. Well, if we convert this this function in Python pseudo-code, it would look similar to:
+Since types in Python are defaulted for us, the default return statement for our code above would result in a float. $sqrt(4, 1) = 2.0$ and $sqrt(5, 3)$ would be about 2.24. However, for $sqrt(5, -4)$, the function returns -1 since the inputs were not True for either expressions. You may be wondering why another Boolean expression was included in this script. Well, if we convert this this function in Python pseudo-code, it would look similar to:
 
 \begin{lstlisting}[language=Python]
 
@@ -356,10 +365,10 @@ subtrN (S m) (S n) = (subtrN m n)
 \end{lstlisting}
 
 \noindent
-Similarly in the example above, we are setting the subtrN function, which subtracts natural numbers, to receive two natural numbers as an input and outputs one natural number as well declared its type on the first line of code. The $->$ symbol represents the order of the inputs and outputs of the type declaration: the first NN represents the first input and the last NN represents the final output. Depending on the goal of the function and the number of outputs it may have, Haskell only cares for the order that the inputs and outputs are placed, using the arrows as a left to right process from step A to the final output.
+Similarly in the example above, we are setting the subtrN function, which subtracts natural numbers ($\mathbb N$), to receive two natural numbers as an input and outputs one natural number as well declared its type on the first line of code. The $->$ symbol represents the order of the inputs and outputs of the type declaration: the first natural number represents the first input and the last represents the final output. Depending on the goal of the function and the number of outputs it may have, Haskell only cares for the order that the inputs and outputs are placed, using the arrows as a left to right process from step A to the final output.
 
 \medskip\noindent
-You have the flexibility with Haskell to create your own types or utilize the built-in types Haskell has. As with the example above, type NN was defined as
+You have the flexibility with Haskell to create your own types or utilize the built-in types Haskell has. As with the example above, type $\mathbb N$, or natural numbers, is defined as
 
 \begin{lstlisting}[language=haskell]
 -- Natural numbers
@@ -367,7 +376,7 @@ data NN = O | S NN
 \end{lstlisting}
 
 \noindent 
-where O represents the number zero (0) and S represents +1 of type NN. The $|$ bar represents flexibility in that there are two ways to represent a natural number. Haskell also has built-in type classes, such as Eq, Ord, Num, and Enum \cite{LYH Types}. Eq (==, !=) is used for equality testing and results in a True/False Boolean value, depending on the outcome of the expression. Ord is used for ordering and utilizes $>$, $<$, $>=$, $<=$ to compare the order of objects. Num can be used where the element given can act as any number if applicable, such as an Integer or Double. An interesting type class is Enum, where elements in a sequential order can be automatically enumerated by Haskell, given a certain range. For example, given the lists of elements:
+where O represents the number zero (0) and S represents +1 of type $\mathbb N$. The $|$ bar represents flexibility in that there are two ways to represent a natural number. Haskell also has built-in type classes, such as Eq, Ord, Num, and Enum \cite{LYH Types}. Eq (==, !=) is used for equality testing and results in a True/False Boolean value, depending on the outcome of the expression. Ord is used for ordering and utilizes $>$, $<$, $>=$, $<=$ to compare the order of objects. Num can be used where the element given can act as any number if applicable, such as an Integer or Double. An interesting type class is Enum, where elements in a sequential order can be automatically enumerated by Haskell, given a certain range. For example, given the lists of elements:
 
 \begin{lstlisting}[language=haskell]
 ghci> ['b' ..'f']
