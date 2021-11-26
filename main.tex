@@ -8,6 +8,8 @@
 \usepackage[usenames]{color}
 \usepackage{hyperref}
 \usepackage{listings}
+\usepackage{graphicx} %package to manage images
+\graphicspath{ {./images/} }
   \hypersetup{
     colorlinks = true,
     urlcolor = blue,       % color of external links using \href
@@ -392,16 +394,71 @@ The Haskell compiler would return 'bcdef', 'T', and [4, 5, 6, 7, 8, 9] as the ou
 Monads is another important and interesting functionality that Haskell implements in its language. You have most likely already used monads before in other languages, as monads can be lists, Maybe type, and Inputs/Outputs \cite{Haskell.org Monads}. When you google the definition of monad, you may come across two definitions, a programming and a philosophical one. As mentioned in our introduction to Haskell, programming languages expands a programmers mindset to focus on both the theoretical and philosophical side of computer science, so it is not surprising that the term is also used in programming and theory.
 
 \medskip\noindent
-Monads lies under the metaphysics sect of philosophy where German philosopher Gottfried Wilhelm Leibniz coined the term as "non-composite, immaterial, soul-like entities" \cite{IEOP}. The term can be further reduced to mean of which is one, has no parts and is therefore indivisible \cite{IEOP}. In a computer science sense, the idea of being indivisible remains. Monads are constructed on top of a polymorphic type in Haskell and monadic classes are non-derivable \cite{Haskell Monads}. The type class has three rules, called the monadic rules: \cite{TP Monads}:
+Monads lies under the metaphysics sect of philosophy where German philosopher Gottfried Wilhelm Leibniz coined the term as "non-composite, immaterial, soul-like entities" \cite{IEOP}. The term can be further reduced to mean of which is one, has no parts and is therefore indivisible \cite{IEOP}. In a computer science sense, the idea of being indivisible remains. Monads are constructed on top of a polymorphic type in Haskell and monadic classes are non-derivable \cite{Haskell Monads}. 
+
+\begin{lstlisting}[language=haskell]
+class Monad m where
+  (>>=)  :: m a -> (  a -> m b) -> m b
+  (>>)   :: m a ->  m b         -> m b
+  return ::   a                 -> m a
+\end{lstlisting}
+
+\medskip\noindent
+Each Monad class has a similar structure, as seen in the code above. The structure is divided up into three chunks: a type constructor that assigns the type of the function, a function that takes one value and returns a calculation that returns a value, and a function that takes two calculations and executes them one at a time, allowing the result of the first calculation available to the second. The operator $>>=$ binds the value returned from a computation of one function to another.The operator $>>$ works similarly to $>>=$, except it ignores the value produced by the function \cite{FL Monads}.
+
+\medskip\noindent
+The type class also has three rules, called the monadic rules: \cite{TP Monads}:
 
 \begin{enumerate}
     \item Left Identity Law
+        \subitem {
+        \begin{lstlisting}[language=haskell] 
+        return x >>= f = f x 
+        \end{lstlisting}}
     \item Right Identity Law
+         \subitem {
+        \begin{lstlisting}[language=haskell] 
+        m >>= return = m
+        \end{lstlisting}}
     \item Associativity
+         \subitem {
+        \begin{lstlisting}[language=haskell] 
+        (m >>= f) >>= y = m >>= (x -> f x >>= y)
+        \end{lstlisting}}
 \end{enumerate}
 
 \noindent
-The Left and Right Identity Laws has the same goal where the return statement would not change the value or anything in the Monad \cite{TP Monads}. The goal of associativity is to ensure that Monads and Functors operate similarly \cite{TP Monads}. Functors are another form of polymorphism implemented in Haskell where Lists, Maps, and Trees are all instances of Functors. Monads are a type of Applicative Functor, which is a Functors with additional features \cite{TP Functors}. The third rule is the ensure that Monads in Haskell follow the rules associated with Functors. Although this is may be daunting and confusing at first, think of monads as the bridge between programming and philosophical thinking. Although the two concepts seem completely unrelated, a philosophical mindset was and is still critical in the creation of functions and types that allows for efficient coding standards.
+The Left and Right Identity Laws has the same goal where the return statement would not change the value or anything in the Monad \cite{TP Monads}. The goal of associativity is to ensure that Monads and Functors operate similarly \cite{TP Monads}. The laws work together to ensure that the transformations of imperative programs are correct and have a logic outputs \cite{Monad Laws}.
+
+\medskip\noindent
+Functors are another form of polymorphism implemented in Haskell where Lists, Maps, and Trees are all instances of Functors. Monads are a type of Applicative Functor, which is a Functors with additional features \cite{TP Functors}. The third rule is the ensure that Monads in Haskell follow the rules associated with Functors. 
+
+\begin{lstlisting}[language=haskell] 
+class Functor f where 
+   fmap :: (a -> b) -> f a -> f b 
+\end{lstlisting}
+
+\medskip\noindent
+In this example of fmap, we utilize the map function, which applies a function to each element of a functor, such as a list, and returns an updated list of each individual element's output \cite{TP Functors}. The map function is also an important function to be familiar within this course as it does come up in Assignment 2. Say that we are given a list of numbers, $[1, 4, 5, 9, 3]$ and we want to apply the function $squareElement$ to each number to in the list. Since lists fall under the functor cateogory, we can use the function apply the $squareElement$:
+
+\begin{lstlisting}[language=haskell] 
+main = do  
+   print(fmap (squareElement) [1, 4, 5, 9, 3])
+   print(map (squareElement) [1, 4, 5, 9, 3])
+   print (map  (squareElement) (Just 3))
+   print (fmap  (squareElemen) (Just 3))
+\end{lstlisting}
+
+\begin{lstlisting}[language=haskell] 
+Output:
+   [1, 16, 25, 81, 9]
+   [1, 16, 25, 81, 9]
+   error
+   Just 9
+\end{lstlisting}
+
+\medskip\noindent
+Here we can see our code from running our new fmap function using Functor, and the built in map function that Haskell provides. We get the same output for an input of a list, but with other data types, such as Nothing or Just, we get an error for $map$ since the data type is not compatible \cite{TP Functors}. Functors open us up to more data types to be used alongside functions. Although this is may be daunting and confusing at first, think of monads and functors as bridges between programming and philosophical thinking. Although the two concepts seem completely unrelated, a philosophical mindset was and is still critical in the creation of functions and types that allows for efficient coding standards.
 
 \subsection{Haskell and Lambda-Calculus}
 
@@ -459,11 +516,14 @@ formula(3, 5, 4)
 \end{lstlisting}
 
 \noindent
-Here we can directly compare how the syntax between the two differ and how concise (possibly even lazy) Lambda Calculus is. Lambda Calculus uses dot notation to denote its input at the start and separates its inputs with the dot. It also takes in the inputs at the end, while the formula itself is in the middle.
+Here we can directly compare how the syntax between the two differ and how concise (possibly even lazy) Lambda Calculus is. Lambda Calculus uses dot notation to denote its input at the start and separates its inputs with the dot. It also takes in the inputs at the end, while the formula itself is in the middle. Now taking these concepts, we can dive deeper into the history of Lambda Calculus and its creator, Alonzo Church.
 
 \subsubsection{Church Numerals and Booleans}
 
-In addition to having a concise syntax, there are also church numerals, named after the creator of Lambda Calculus, Alonzo Church \cite{Lambda Calculus}. To represent numbers, Church denotes numbers as \cite{CN}:
+In addition to having a concise syntax, there are also Church Numerals, named after the creator of Lambda Calculus, Alonzo Church \cite{Lambda Calculus}. Church, alongside many additional accomplishments in his life, helped create the foundations of theoretical computer science, which is why we are here today, with so many technological advancements. An interesting fact about Church is that he was a university professor for both mathematics and philosophy which can be another reference to how math and philosophy can be connected, similar to Monads \cite{NAS}.  
+
+\medskip\noindent
+To represent numbers, Church denotes numbers as \cite{CN}:
 
 \begin{center}
     0 = $\lambda f. \lambda\ x.x$ \\
@@ -489,15 +549,222 @@ There are also Church Booleans, where Church denoted True and False values using
 \end{center}
 
 \noindent
-Here, the formula takes in two inputs, x and y, where x (or the first inputted value) is True and y (the second inputted value) is False \cite{CN}. As mentioned previously, Lambda Calculus is an important aspect in becoming an official Haskeller, the logo displays that clearly. Practicing its concise syntax and comparing it to syntax you are already familiar with, such as handwritten formulas or code, will boost your comfort with Haskell as well.
+Here, the formula takes in two inputs, x and y, where x (or the first inputted value) is True and y (the second inputted value) is False \cite{CN}. There are addition and multiplication which can be represented in Church numerals as:
+
+\begin{center}
+ $ Addition = \lambda m.\lambda n.\lambda f.\lambda x.m\ f\ (n\ f\ x)$ \\
+ $ Multiplication = \lambda m.\lambda n.\lambda f.\lambda x.m\ (n\ f) \ x $ \\
+\end{center}
+\noindent 
+which uses a similar structure as +1, but includes a new variable, $m$, to represent a number besides 1, where the placement of the parenthesis between the variables is important in syntax to ensure the correct operation. As mentioned previously, Lambda Calculus is an important aspect in becoming an official Haskeller, the logo displays that clearly. Practicing its concise syntax and comparing it to syntax you are already familiar with, such as handwritten formulas or code, will boost your comfort with Haskell as well. More Lambda Calculus topics and concepts will be discussed in section 3 of this report as well, where we discuss the theory of programming languages, so keep in mind that Lambda Calculus is used in all aspects of programming languages; this is merely scratching the surface. 
 
 \subsection{Introduction into the Haskell Project}
 
-For my Haskell Project, I would like to explore an integration between Haskell and Data Science. Currently, I am also taking a course in Machine Learning, where we use a package called TensorFlow to run neural networks and other deep learning models \cite{TF}. While researching ideas of finding a way to use Haskell alongside my data science interest, I came across an article that mentions how to use Haskell and TensorFlow \cite{HTF}. For my project, I'd like to explore this idea more and see if I could use Haskell to run machine learning models, such as Recurrent Neural Networks and Support Vector Machines. I'm interested in using a real dataset if possible, such as the popular IMDb dataset, but plan first on beginning with generated numbers and see if the connection between Haskell and TensorFlow could work.
+For my Haskell Project, I would like to explore an integration between Haskell and Data Science. Currently, I am also taking a course in Machine Learning, where we use a package called TensorFlow to run neural networks and other deep learning models \cite{TF}. While researching ideas of finding a way to use Haskell alongside my data science interest, I came across an article that mentions how to use Haskell and TensorFlow \cite{HTF}. For my project, I'd like to explore this idea more and see if I could use Haskell to run machine learning models, such as Recurrent Neural Networks and Support Vector Machines. I'm interested in using a real dataset if possible, such as the popular IMDb dataset, but plan first on beginning with generated numbers and see if the connection between Haskell and TensorFlow could work. More on this subject will follow in section 4 of this report.
 
 \section{Programming Languages Theory}
 
-In this section you will show what you learned about the theory of programming languages. 
+So now that we have gained a brief overview of Haskell and all the ways it can be used in our code, let us switch over to the theory of programming languages. Haskell required a skill set that was beyond coding in another programming languages, such as Python, Java, or C++, as it also required users to know Discrete Mathematics, recursion in place of for or while loops, sets of numbers, and an introduction into Lambda Calculus to use the language to its maximum ability.
+
+\medskip\noindent
+Now let's shift our mindset from learning a functional programming language to now developing our own language. When developing a programming languages, functional or imperative, every programmer must first be familiar with the theory behind every programming language such as:
+
+\begin{enumerate}
+    \item More knowledge of Lambda Calculus and Church's contributions to the theory of computer science
+        \subitem{a. }Church Numerals in Python and Haskell
+    \item What is Turing Complete?
+        \subitem{a.} What are Turing Machines?
+    \item What is the Halting Problem? 
+        \subitem{a.} Why is it undecidable? 
+        \subitem{b.} What are other undecidable problem?
+    \item String Rewriting
+        \subitem{a. }Key Concepts:
+            \subsubitem{ -  }Confluence
+            \subsubitem{ -  }Normal Forms
+            \subsubitem{ -  }Termination
+            \subsubitem{ -  }Invariants
+        \subitem{b. }Can we prove confluence automatically? 
+\end{enumerate}
+
+\medskip\noindent
+Picking up from Lambda Calculus, we will first expand our skill set with more theorems and concepts that are vital to the theory of programming languages and how Alonzo Church and Alan Turing (who's story was told in one of my favorite films, The Imitation Game), both contributed to the field we are in today with Church Numerals, Lambda Calculus, Turing Complete, and Turing Machines. As Church was a close mentor and advisor to Turing, the two also created a concept called Church-Turing Thesis which is interesting to note the relationship and combination of brainpower between two important figures in this field. From there, we will touch upon the Halting Problem, which discusses if a program will end or continue forever depending on the program and its inputs. The Halting Problem relates directly to Turing Machines and is an interesting concept in computer science to discuss. String Rewriting will follow, focusing on confluence, termination, normal form, and invariants, where theory portion of this paper will then conclude as we take a deeper dive into the theoretical side of this course and computer science itself.
+
+\subsection{More In-Depth Information of Lambda Calculus and its Importance in Computer Science}
+
+As discussed in the previous section, Lambda Calculus plays an important role in utilizing the core components of Haskell. Overall, Lambda Calculus plays a larger role than being a key feature in Haskell, it is a part of every functional programming language. It can be and is often considered to be the simplest or smallest programming language there is, as it represents computation of inputs and outputs based upon variable binding and substitution \cite{JRebel}. In section 2.4, we discussed basic functions denoted in Lambda Calculus, Church Numerals and Booleans, and how addition and multiplication are represented in Lambda Calculus notation. Let's discuss the syntax of Lambda Calculus more in-depth and how it is a valid representation of the mathematical function:
+
+\begin{center}
+ 3 = $\lambda f. \lambda\ x.(f \; (f \; (f \; x)))$ \\
+\end{center}
+
+\noindent 
+Starting with Church Numerals, let us break down this formula to get a better grasp of the syntax. In Section 2.4.1, when we discussed Church Numerals, we used two inputs, $\lambda f.\lambda x.$. The first two items of every Church Numeral always started with $\lambda f.\lambda x.$, where $\lambda f$ represents a function and $\lambda x$ represents a value. The $\lambda$ symbol represents an input to the Lambda Calculus syntax, the function and the value, in that order. Church's interpretation of his Numerals consists of only these two parts where $\lambda f$ is used repeatedly to indicate the action of applying any given function a certain number of times to a value, $\lambda x$. It is assumed by our understanding looking at Church Numerals that $\lambda x$ represents 0 and $\lambda f$ represents a successor function (+1), which would give us a natural number output of 3. However, keep in mind that Church Numerals simply means applying a function to a value for a certain number of times. In our case, Church Numeral 3 means applying a function 3 times to a value \cite{CE}.
+
+\begin{center}
+ $ Addition = \lambda m.\lambda n.\lambda f.\lambda x. m\ f\ (n\ f\ x)$ \\
+\end{center}
+
+\medskip\noindent
+Now shifting over to Addition, we can now see we have four inputs, two more than we saw in Church Numerals. Let's dissect this formula in parts to understand how this is an appropriate representation of Addition. We can see that our four inputs are $\lambda m$, $\lambda n$, $\lambda f$, and $\lambda x$, where we see that our last two inputs, $\lambda f$, and $\lambda x$, are the same inputs we used for Church Numerals, a function and a value. Now the natural question would be what is $\lambda m$ and $\lambda n$? Yet again, referencing back to Section 2.4.1, we can see that the general formula for Church Numerals where the number of times a function is applied to a value is now defined as:
+
+\begin{center}
+   $ n = \lambda n. \lambda f. \lambda x.f \; ((n \; f) \; x)$
+\end{center}
+
+\noindent
+Where we can see our first representation of $\lambda n$. In this example, $\lambda n$ represents the number of times $\lambda f$, our function is applied to the value $\lambda x$. In our addition example, as there are two values compared to one, where $m$ is called before the $f$, indicated a $m+n$ function \cite{CE}. $\lambda n. \lambda f. \lambda x.f \; ((n \; f) \; x)$ can be read as $m + n$ where $\lambda f$ is +. With a more in-depth explanation of the syntax of lambda calculus, you will now be able to define multiplication, exponents, and more!
+
+\subsubsection{Church Numerals in Python and Haskell}
+Now as we know from the symbol of Haskell, Lambda Calculus is a very important part of the language and is vital for us to know. Therefore, one may assume that there must be a way to implement Church Numerals in Haskell as well. Let's first start with implementing Lambda Calculus in a language that we are more familiar with, such as Python. Luckily for us, Python has a built in function to its language called lambda that can take a number of arguments, and results in one expression \cite{LCP}. For example:
+\begin{lstlisting}[language=Python]
+def lambdaEx(n):
+  return lambda x : x + n
+
+plusTwo = lambdaEx(2)
+plusTen = lambdaEx(10)
+
+print(plusTwo(4)) 
+print(plusTen(4)) 
+\end{lstlisting}
+
+\noindent
+will result in the number 6 and 14, respectfully. Although the variables plusTwo and plusTen both reference the lambdaEx function, both of their functionalities of adding 2 and 10 to the inputted number occur successfully. Notice how $print(plusTwo(4))$ and $print(plusTen(4))$ only take in one argument, the number to add two and ten (4), and not $plusTwo(4, 2)$ and $plusTen(4, 10)$. With the definition of $plusTwo = lambdaEx(2)$ and $plusTen = lambdaEx(10)$, the program already knew which number to add to the input. This may seem a tad bit obvious, but this is not a common syntax that we are used to. Remember that plusTwo and plusTen are variables and yet we are using them as functions with an argument! Now let us take a look at how Lambda in Python can also implement Church Numerals \cite{LCP}:
+
+\begin{lstlisting}[language=Python]
+def num(function):
+    def count(x):
+        return x + 1
+    return function(count)(0)
+
+zero = lambda f: lambda x: x
+one = lambda f: lambda x: f(x)
+
+successor = lambda n: lambda f: lambda x: f(n(f)(x))
+three = successor(successor(successor(zero)))
+
+print(three)
+print(num(three))
+\end{lstlisting}
+
+\begin{lstlisting}[language=Python]
+Output:
+<function <lambda> at 0x1026909d0>
+3
+\end{lstlisting}
+\noindent
+Here we can see a similar syntax as we saw for $ n = \lambda n. \lambda f. \lambda x.f \; ((n \; f) \; x)$ for the variable successor in our code, which essentially represents +1. In our code, zero and one are also defined similarly as they would be as we can see on page 12, and we utilize our successor function three time to get an output of the number 3. Remember that Church Numerals represents the application of a function to a value for a certain number of times.  In our case, the value zero had the successor function applied to its value three times, resulting in the number 3 as an output. The $num$ function is used on our case to have that integer representation of the Church Numeral, opposed to the first print statement which is a memory address which does not tell us a whole lot about the Church Numeral. 
+
+\medskip\noindent
+Now in Haskell, the representation of Church Numerals is as follows \cite{Church Numerals in Haskell}:
+
+\begin{lstlisting}[language=haskell] 
+type ChurchNumeral a = (a -> a) -> a -> a
+
+zero :: ChurchNumeral a
+zero = \f x -> x
+
+two :: ChurchNumeral a
+two = \f x -> f (f x)
+
+churchN :: Integral a => ChurchNumeral a -> ChurchNumeral a
+churchN n = \f x -> f (n f x)
+
+plusOne x = x + 1
+
+churchToNum :: Integral a => ChurchNumeral a -> a
+churchToNum n = n (plusOne) 0
+
+main = do
+  let three = churchN two
+  putStrLn $ (show $ churchToNum three)
+  putStrLn $ (show $ churchToNum zero)
+\end{lstlisting}
+\begin{lstlisting}[language=Python]
+Output:
+3
+0
+\end{lstlisting}
+
+\noindent
+Yet again, we see a very similar, if not exact same, syntax in defining Church Numeral 0, 3, and $n$. This is not very surprising since as we have discussed, Haskell heavily relies on Lambda Calculus for its functionality. Looking at the code above may be a bit confusing at first, so lets break it down to understand how and why it works. We begin with defining the type $ChurchNumeral$, which is referenced throughout the code as the typeclass of the Church Numerals we will be using. We define the Church Numerals $zero$ and $two$ as well, the same as noted on page 12 and in the simplest functional programming language that was created for Assignment 2. $churchN$ serves as the successor function, which is similar to $ n = \lambda n. \lambda f. \lambda x.f \; ((n \; f) \; x)$, where we have seen throughout this paper and in the Python script above.
+
+\medskip\noindent
+$churchToNum$ is a handy tool we use in this script to convert the Church Numeral we define to an Integral (or whole number) representation for an output. This was the trickiest part of the script, where $churchToNum n = n (plusOne) 0$ is a short but critical component of the code. This line is essentially an if-then-else statement: if $n$ is greater than 0, then apply the $plusOne$ function to n for the numerical representation of the Church Numeral. Else, return 0. Without any part of this line, the script would error out, since the value, an function, and a base case is needed. 
+
+\medskip\noindent
+Say we change the statement to be $churchToNum n = n (plusOne) 1$, then the output of $churchToNum$ $three$ would increase by +1, to 4, and $churchToNum$ $zero$ to 1, which is incorrect, as the last part of the syntax is the base case, or the lowest number possible, which must be 0. We then apply the successor function $churchN$ to $two$, which results in the program return a Church Numeral 3 as the output after converting from ChurchNumeral type to a whole number, and the same is done to zero with no successor applied. So as we have just learned, Church Numerals and Lambda Calculus in general, can be defined and created in multiple languages, such as Python and Haskell, and are an important part of programming languages theory as it is the starting blocks as to what we know the field computer science to be today.
+
+\subsection{What is Turing Complete}
+A phrase you may hear during one's beginning steps in Lambda Calculus is that lambda calculus is Turing Complete. Now if you are anything like me, a bit a film buff, my first reaction to this phrase was thinking about Alan Turing, who was portrayed in the film, The Imitation Game (2014). This film shows Turing's contributions in creating the foundations of important computer science theories today, such as Artificial Intelligence and Machine Learning, with his paper \cite{Computing Machinery and Intelligence}, proposing the first question of if machines can think (I would highly recommend this movie, it was very well done and one of my favorites). Alongside  Turing's contributions to AI and Machine Learning, he also added his fair share to the advancement of programming languages and its theory as well with  Turing Complete and Turing Machines. 
+
+\medskip\noindent
+ Turing Complete is a concept which essentially evaluates the capabilities of a programming language: is the language equipped to handle any and all sorts of algorithms? For example, HTML and JSON are not Turing Complete, as they cannot perform all sorts of algorithms. HTML is mainly used for website design and interface, whereas JSON is used to store structured data, making it easier for developers to pull data/information from. Below is a simple example of a HTML script that sets up the interface for addition between $m$ and $n$ while JavaScript is used to perform the operation itself:
+ 
+ \begin{lstlisting}[language=html] 
+<input type="text" id="m"><br/>
+<input type="text" id="n"><br/>
+<input type="text" id="+"><br/>
+<input type="button" value="+" onclick="additionCalc()"><br/>
+
+<script>
+    <!-- End of HTML portion, Javascript used here alongside HTML-->
+    function additionCalc(){
+        let m = document.getElementById("m").value;
+        let n = document.getElementById("n").value;
+        let add = Number(m) + Number(n);
+    document.getElementById("+").value = add;
+}
+</script>
+\end{lstlisting}
+ 
+ \medskip\noindent
+ Here we can see that without JavaScript (which is another programming language that can be integrated with HTML), the raw HTML code cannot perform an addition operation. Using the script functionality, it is able to utilize JavaScript, but there is no defined way for HTML on its own to perform any type of algorithm/operation. Although HTML and JSON are important to learn and provide a vital service, they do not have the capabilities to run algorithms such as mathematical operations or while loops. Without the functionality to perform computations, these languages cannot be considering  Turing Complete \cite{TC}. However, languages such as Python, Java, C++, and even Lambda Calculus are. It can be said that Lambda Calculus is the shortest and simplest programming language there is, but what exactly makes Lambda Calculus Turing Complete you may ask? 
+
+\medskip\noindent
+Even though Lambda Calculus is more abstract than other languages that you may be familiar with, such as Python or Java, it does pass this evaluation since it is a notation that represents functions and computations, with an input and an output. Since this is an algorithm, which takes an input to perform logic upon to produce an output, Lambda Calculus is Turing Complete. Another way to determine if a programming language is Turing Complete is if the language can replicate a Turing Machine \cite{Turing Completeness}.
+
+\subsubsection{What is a Turing Machine}
+ A Turing Machine is considered to be an abstract mathematical theorem that breaks down the definition of what programmers interpret computations to be \cite{Turing Completeness}. Next to Lambda Calculus, Turing Machines are the next simplest programming language there is which was invented to define what an algorithm is. It is also known as the simplest imperative language, which is a direct contrast to Lambda Calculus which is the simplest functional language. Now although it is misleading using the word machine in a concept that is said to be abstract, but let us learn a bit more about this concept to see how it can be considered to be a machine. Turing Machines are broken down into two aspects: a computational head and an extremely (infinitely) long tape \cite{Turing Completeness}. A key takeaway in this definition is that the tape is infinite. If finite, the tape would then, in theory, end, and the machine would stop performing calculations. Today, the tape can be interpreted as random access memory (RAM) or external memory such as a disk that every computer has and the head is a read and write interpreter that reads the information that is passed, records it, and decides which direction to move the tape. 
+ 
+  \medskip\noindent
+ As we can see, although Turing Machines are described as abstract, it is abstract due to the time frame the concept was originated. Turing coined the idea back in the 1930s, where there were no computers and machinery that people today use in their everyday tasks. Alan Turing left an important mark in the computer science field, as his idea of a Turing Machine is the basic groundwork of every imperative programming language we use, as well as the laying the groundwork of the basic foundation of computers and laptops. However, since Turing Machines were invented before computers and the programming languages we use today, where we can clearly see an error in our code, there were many follow-up questions to pick at Turing's brain. As mentioned previously, a way to determine if a programming language is Turing Complete is if the language can replicate a Turing Machine. If one can successfully mimic a Turing Machine, it is said that it can compute any and all functions \cite{Turing Completeness}. However, this definition assumes that all functions that are created are computable, and would also produce an output. Now, this definition does not account for functions that are incomputable or create infinite loops (does the function ever complete execution?). This question posed by Martin Davis is also known as The Halting Problem, which will be discussed further in the next section, Section 3.3 \cite{Turing Completeness}.
+
+
+\subsection{The Halting Problem}
+As stated previously in 3.2.1, a way we can determine if a programming language is Turing Complete is if the language can replicate a Turing Machine. This can also be translated to that all and every function will be able to successfully run in a Turing Machine. However, this implies that every function created is a computable function which will execute and terminate in a successful manner. As computer scientists, who have been coding for at least a few years I assume, we know this is far to be true. Most code that we write and run for the first time will error out due to either logic or syntactical issues, which in turn, makes them incomputable functions. In addition to, having infinite loops, which will continue on forever given a certain input poses the question if the program ever ends. Is it still a Turing Machine if it only runs one algorithm forever? This creates an issue in the Turing Machine theory, known as the Halting Problem \cite{Turing Completeness}.
+
+\begin{lstlisting}[language=Python]
+# example of an infinite loop problem in Python
+def infinite_loop(x):
+    if (x >= 2):
+        print("The number is greater than 2")
+    while (x < 2):
+        print("The number is less than 2")
+
+infinite_loop(4)
+infinite_loop(1)
+
+\end{lstlisting}
+\noindent
+
+ \medskip\noindent
+ The main question the Halting Problem proposes is does the function/program terminate given a certain input. In the Python example above, we see an example of an infinite loop, where the program would first print out "The number is greater than 2" and then run forever, printing "The number is less than 2" since it is under a while loop that never is False. Since the condition is always True, and will never be set to False, it continues printing the same statement forever. Although we have a clear example of what an infinite loop looks like, it is difficult to predict what type of algorithm would be passed through every Turing Machine. If a function is incomputable, then there is no Turing machine that can compute an output \cite{Turing Completeness}. Considering that Turing Complete is either a True/False or Yes/No question, where the language can be either Turing Complete or not, that makes the problem decidable. Since the Halting Problem deals with incomputable functions, that makes the problem undecidable.
+ 
+\medskip\noindent
+Now there steps for computer scientists to follow when determining if a function/program is a decidable or undecidable problem: 
+\begin{enumerate}
+    \item There is a program and an input
+    \item The program passes the the Halting Problem test if it terminates given the input
+    \item The program fails the the Halting Problem test if it does not terminates given the input
+\end{enumerate}
+
+\medskip\noindent
+Other examples of undecidable problems in abstract computer science theory is the Busy Beaver Problem and Rice's Theorem \cite{Undecidable Problems}. Now when first being introduced to these concepts and theorems may be confusing, but remember that The Halting Problem simply asks the question does the program terminate given an input and if that is considered a Turing Machine. Having programs that run forever on a machine would not be cost efficient at all. Imagine having one machine that computes 1+1 all day, everyday, forever. This is why this question was and still is an important concept to be aware of when the engineering and computer science fields expanded and continues to grow. Ensuring the computers and future machines would have a way to handle these concerns was vital to the success of the field, since as we know today, we handle infinite loops by terminating the program ourselves from our terminal, using Control-C. 
+
+\subsection{String Rewriting}
+
+\subsubsection{Confluence, Normal Forms, Termination, Invariants}
+\subsubsection{Can we prove confluence automatically?}
 
 \section{Project}
 
@@ -520,11 +787,25 @@ Short conclusion.
 \bibitem[IEOP]{IEOP} \href{https://iep.utm.edu/leib-met/}{Gottfried Leibniz: Metaphysics}, iep.utm.edu, 2021.
 \bibitem[Haskell Monads]{Haskell Monads} \href{https://www.haskell.org/tutorial/monads.html}{About Monads}, www.haskell.org, 2021.
 \bibitem[TP Monads]{TP Monads} \href{https://www.tutorialspoint.com/haskell/haskell_monads.htm}{Haskell - Monads}, www.tutorialspoint.com/, 2021.
+\bibitem[FL Monads]{FL Monads} \href{https://www.futurelearn.com/info/courses/functional-programming-haskell/0/steps/27246}{Introduction to Monads
+}, www.futurelearn.com/, 2021.
+\bibitem[Monad Laws]{Monad Laws} \href{https://wiki.haskell.org/Monad_laws}{Monad Laws}, wiki.haskell.org, 2021.
 \bibitem[TP Functors]{TP Functors} \href{https://www.tutorialspoint.com/haskell/haskell_functor.htm}{Haskell - Functors}, www.tutorialspoint.com/, 2021.
 \bibitem[Haskell Logo]{Haskell Logo} \href{https://wiki.haskell.org/Haskell_logos/New_logo_ideas}{Haskell - Logo}, wiki.haskell.org, 2021.
 \bibitem[Lambda Calculus]{Lambda Calculus} \href{https://plato.stanford.edu/entries/lambda-calculus/}{The Lambda Calculus}, plato.stanford.edu, 2018.
 \bibitem[CN]{CN} \href{https://opendsa-server.cs.vt.edu/ODSA/Books/PL/html/ChurchNumerals.html}{Church Numerals and Booleans}, opendsa-server.cs.vt.edu, 2018.
 \bibitem[TF]{TF} \href{https://www.tensorflow.org/}{TensorFlow}, www.tensorflow.org, 2021.
 \bibitem[HTF]{HTF} \href{https://towardsdatascience.com/starting-out-with-haskell-tensor-flow-49ec8aa7697f}{Starting out with Haskell Tensor Flow}, towardsdatascience.com, 2017.
+\bibitem[NAS]{NAS} \href{http://www.nasonline.org/member-directory/deceased-members/56941.html}{Alonzo Church}, www.nasonline.org, 2021.
+\bibitem[JRebel]{JRebel} \href{https://www.jrebel.com/blog/what-is-lambda-calculus}{What Is Lambda Calculus and Should You Care}, www.jrebel.com, 2013.
+\bibitem[CE]{CE} \href{https://www.wikiwand.com/en/Church_encoding}{Church encoding}, www.wikiwand.com, 2021.
+\bibitem[Computing Machinery and Intelligence]{Computing Machinery and Intelligence} 
+\href{https://academic.oup.com/mind/article/LIX/236/433/986238}{Computing Machinery and Intelligence}, academic.oup.com, 1950.
+\bibitem[LCP]{LCP} \href{https://akajuvonen.github.io/2020/07/14/lambda-calc.html}{LCP}, akajuvonen.github.io, 2020
+\bibitem[Church Numerals in Haskell]{Church Numerals in Haskell} \href{https://github.com/Risto-Stevcev/haskell-church-encodings/blob/master/RankNTypes/Church.hs}{Church Numerals in Haskell}, github.com, 2018.
+\bibitem[TC]{TC} \href{https://dev.to/gruhn/what-makes-a-programming-language-turing-complete-58fl}{Turing Complete}, dev.to, 2020.
+\bibitem[Turing Completeness]{Turing Completeness} \href{https://evinsellin.medium.com/what-exactly-is-turing-completeness-a08cc36b26e2}{Turing Completeness}, medium.com, 2017.
+\bibitem[Undecidable Problems]{Undecidable Problems} \href{https://en-academic.com/dic.nsf/enwiki/594998}{Undecidable Problem}, en-academic.com, 2021.
+
 \end{thebibliography}
 \end{document}
