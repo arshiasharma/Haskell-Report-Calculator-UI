@@ -17,6 +17,6 @@ You may see some warnings from the terminal relating to import statements for Gr
 Sources used for the final project include:
 * https://hackage.haskell.org/package/threepenny-gui
 * http://wiki.haskell.org/Threepenny-gui
-* https://github.com/thma/ThreepennyElectron
 * https://github.com/HeinrichApfelmus/threepenny-gui
 * https://github.com/astynax/threep
+* * https://github.com/thma/ThreepennyElectron
