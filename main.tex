@@ -19,6 +19,9 @@
     }
     
 \usepackage{listings}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx} %package to manage images
+\usepackage{float}
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
@@ -87,14 +90,19 @@
 \maketitle
 
 \begin{abstract}
-This report will discuss three key topics in Programming Languages: What is Haskell, its benefits and uses, the theory involved with Programming Languages in regards to Discrete Mathematics and other methodologies, and a mini-project.  \ldots 
+\noindent
+This report will discuss three key topics in Programming Languages: What is Haskell, its benefits and uses, the theory involved with Programming Languages in regards to Discrete Mathematics and other methodologies, and a mini-project. The paper starts off with an introduction to what topics that will be discusses, such as Haskell, its importance, discrete mathematics, recursion, Monads, type classes, Lambda-Calculus, Turing Complete, the Halting Problem, Abstart Recution System, and String Rewriting. The project will cover how to create a calculator using a Haskell GUI. 
+
 \end{abstract}
 
 \tableofcontents
 
 \section{Introduction}\label{intro}
 
-Replace Section~\ref{intro} with your own short introduction. 
+What is the first thought you come up with when you hear the phrase programming languages? Maybe it is your favorite programming language, such as Python, Java, or C++. Or could it be straight forward thoughts, such as computers, AI, Machine Learning, school, your future, that one programming assignment from freshman year you put off till the last second that you still get nightmares about. Whatever it may be, have you ever thought about how you can make your own programming language? Or how languages such as Python, Linux, C++, or R Programming even came into existence? 
+
+\medskip\noindent
+Programming languages play an extremely vital role in our society, especially today. Various applications, such as Zoom, TikTok, Google, Angry Birds, and the calculator on your phone are all possible because of the programming language that was used to code those applications you use everyday. This report will cover important topics that relate to programming languages, such as the difference between functional and imperative languages, Haskell and its importance, Lambda Calculus, programming language core theories, such as Turing Complete, and a mini-project that goes over how the build your own Calculator using Haskell. Now take a seat, put your seat belt on, sit back, and relax as we begin our journey into the course of programming languages.
 
 \section{Haskell}\label{haskell}
 
@@ -103,7 +111,7 @@ As Maria von Trapp once sang, let us start at the very beginning, a very good pl
     \item What is Haskell?
     \item What is the difference between Haskell and other programming languages we have covered in other classes so far?
     \item Where to start with Haskell?
-    \item What are type classes and monads?
+    \item What are type classes and Monads?
     \item What more can I do in Haskell that I cannot do as easily with other languages?
     
 \end{enumerate}
@@ -560,10 +568,9 @@ which uses a similar structure as +1, but includes a new variable, $m$, to repre
 
 \subsection{Introduction into the Haskell Project}
 
-For my Haskell Project, I would like to explore an integration between Haskell and Data Science. Currently, I am also taking a course in Machine Learning, where we use a package called TensorFlow to run neural networks and other deep learning models \cite{TF}. While researching ideas of finding a way to use Haskell alongside my data science interest, I came across an article that mentions how to use Haskell and TensorFlow \cite{HTF}. For my project, I'd like to explore this idea more and see if I could use Haskell to run machine learning models, such as Recurrent Neural Networks and Support Vector Machines. I'm interested in using a real dataset if possible, such as the popular IMDb dataset, but plan first on beginning with generated numbers and see if the connection between Haskell and TensorFlow could work. More on this subject will follow in section 4 of this report.
+For my Haskell Project, I would like to explore an integration between Haskell and a GUI interface for Assignment 1. For Assignment 1 of this course, we started with implementing a calculator in Haskell by using an  interpreter and a parser. The calculator was tested on our local machines using the $echo "(1+2)^2 *3--" | ./Calculator$ command on our terminal where after $echo$, we would put the equation we want to evaluate. For this project, I will be modifying this assignment by creating a Calculator in Haskell using the Threepenny-Gui: GUI framework that will create a calculator interface on a web browser for users to interact with by clicking buttons to perform calculations \cite{Threepenny}. The calculator would be able to perform addition, subtraction, multiplication, division, modulo, and exponential operations and handle integers and floats. It will also have error checking integrated where users would see an error message if they perform calculations such as division by 0. More description of the web interface and the Threepenny-Gui will be expanded on in Section 4.
 
 \section{Programming Languages Theory}
-
 So now that we have gained a brief overview of Haskell and all the ways it can be used in our code, let us switch over to the theory of programming languages. Haskell required a skill set that was beyond coding in another programming languages, such as Python, Java, or C++, as it also required users to know Discrete Mathematics, recursion in place of for or while loops, sets of numbers, and an introduction into Lambda Calculus to use the language to its maximum ability.
 
 \medskip\noindent
@@ -577,13 +584,12 @@ Now let's shift our mindset from learning a functional programming language to n
     \item What is the Halting Problem? 
         \subitem{a.} Why is it undecidable? 
         \subitem{b.} What are other undecidable problem?
-    \item String Rewriting
-        \subitem{a. }Key Concepts:
+    \item Abstract Reduction Systems and String Rewriting
+        \subitem{a. }Abstract Reduction Systems and Trees
+        \subitem{b. }String Rewriting
             \subsubitem{ -  }Confluence
             \subsubitem{ -  }Normal Forms
             \subsubitem{ -  }Termination
-            \subsubitem{ -  }Invariants
-        \subitem{b. }Can we prove confluence automatically? 
 \end{enumerate}
 
 \medskip\noindent
@@ -655,7 +661,7 @@ Output:
 Here we can see a similar syntax as we saw for $ n = \lambda n. \lambda f. \lambda x.f \; ((n \; f) \; x)$ for the variable successor in our code, which essentially represents +1. In our code, zero and one are also defined similarly as they would be as we can see on page 12, and we utilize our successor function three time to get an output of the number 3. Remember that Church Numerals represents the application of a function to a value for a certain number of times.  In our case, the value zero had the successor function applied to its value three times, resulting in the number 3 as an output. The $num$ function is used on our case to have that integer representation of the Church Numeral, opposed to the first print statement which is a memory address which does not tell us a whole lot about the Church Numeral. 
 
 \medskip\noindent
-Now in Haskell, the representation of Church Numerals is as follows \cite{Church Numerals in Haskell}:
+Now in Haskell, the representation of Church Numerals Addition is as follows \cite{Church Numerals in Haskell}:
 
 \begin{lstlisting}[language=haskell] 
 type ChurchNumeral a = (a -> a) -> a -> a
@@ -669,36 +675,46 @@ two = \f x -> f (f x)
 churchN :: Integral a => ChurchNumeral a -> ChurchNumeral a
 churchN n = \f x -> f (n f x)
 
-plusOne x = x + 1
+churchAdd :: Integral a => ChurchNumeral a -> ChurchNumeral a -> ChurchNumeral a
+churchAdd m n = \f x -> m f (n f x)
+
+churchMulti:: Integral a => ChurchNumeral a -> ChurchNumeral a -> ChurchNumeral a
+churchMulti m n = \f x -> m (n f) x
+
+plus_one x = x + 1
 
 churchToNum :: Integral a => ChurchNumeral a -> a
-churchToNum n = n (plusOne) 0
+churchToNum n = n (plus_one) 0
 
 main = do
   let three = churchN two
   putStrLn $ (show $ churchToNum three)
   putStrLn $ (show $ churchToNum zero)
+  putStrLn $ (show $ churchToNum (churchAdd two three))
+  putStrLn $ (show $ churchToNum (churchMulti two three))
 \end{lstlisting}
 \begin{lstlisting}[language=Python]
 Output:
 3
 0
+5
+6
 \end{lstlisting}
 
 \noindent
 Yet again, we see a very similar, if not exact same, syntax in defining Church Numeral 0, 3, and $n$. This is not very surprising since as we have discussed, Haskell heavily relies on Lambda Calculus for its functionality. Looking at the code above may be a bit confusing at first, so lets break it down to understand how and why it works. We begin with defining the type $ChurchNumeral$, which is referenced throughout the code as the typeclass of the Church Numerals we will be using. We define the Church Numerals $zero$ and $two$ as well, the same as noted on page 12 and in the simplest functional programming language that was created for Assignment 2. $churchN$ serves as the successor function, which is similar to $ n = \lambda n. \lambda f. \lambda x.f \; ((n \; f) \; x)$, where we have seen throughout this paper and in the Python script above.
 
 \medskip\noindent
-$churchToNum$ is a handy tool we use in this script to convert the Church Numeral we define to an Integral (or whole number) representation for an output. This was the trickiest part of the script, where $churchToNum n = n (plusOne) 0$ is a short but critical component of the code. This line is essentially an if-then-else statement: if $n$ is greater than 0, then apply the $plusOne$ function to n for the numerical representation of the Church Numeral. Else, return 0. Without any part of this line, the script would error out, since the value, an function, and a base case is needed. 
+$churchToNum$ is a handy tool we use in this script to convert the Church Numeral we define to an Integral (or whole number) representation for an output. This was the trickiest part of the script, where $churchToNum n = n (plusOne) 0$ is a short but critical component of the code. This line is essentially an if-then-else statement: if $n$ is greater than 0, then apply the $plusOne$ function to n for the numerical representation of the Church Numeral. Else, return 0. Without any part of this line, the script would error out, since the value, an function, and a base case is needed. Say we change the statement to be $churchToNum n = n (plusOne) 1$, then the output of $churchToNum$ $three$ would increase by +1, to 4, and $churchToNum$ $zero$ to 1, which is incorrect, as the last part of the syntax is the base case, or the lowest number possible, which must be 0. We then apply the successor function $churchN$ to $two$, which results in the program return a Church Numeral 3 as the output after converting from ChurchNumeral type to a whole number, and the same is done to zero with no successor applied. 
 
 \medskip\noindent
-Say we change the statement to be $churchToNum n = n (plusOne) 1$, then the output of $churchToNum$ $three$ would increase by +1, to 4, and $churchToNum$ $zero$ to 1, which is incorrect, as the last part of the syntax is the base case, or the lowest number possible, which must be 0. We then apply the successor function $churchN$ to $two$, which results in the program return a Church Numeral 3 as the output after converting from ChurchNumeral type to a whole number, and the same is done to zero with no successor applied. So as we have just learned, Church Numerals and Lambda Calculus in general, can be defined and created in multiple languages, such as Python and Haskell, and are an important part of programming languages theory as it is the starting blocks as to what we know the field computer science to be today.
+Church Addition and Church Multiplication is also included in the Haskell code which also looks identical to the Addition and Multiplication on page 12, which gives us an output of 5 from $churchAdd$ $two$ $three$ and an output of 6 from $churchMulti$ $two$ $three$. Church Addition is similar to Church Successor ($churchN$) with an addition input $m$ which matches the function: $\lambda m.\lambda n.\lambda f.\lambda x. m\ f\ (n\ f\ x)$. Church Multiplication is also the same to its lambda calculus function of $\lambda m.\lambda n.\lambda f.\lambda x.m\ (n\ f) \ x $. Both outputs work as expected, showing us that Church Addition and Multiplication perform accurately and verify its accuracy. Church Numerals and Lambda Calculus in general, can be defined and created in multiple languages, such as Python and Haskell, and are an important part of programming languages theory as it is the starting blocks as to what we know the field computer science to be today.
 
 \subsection{What is Turing Complete}
 A phrase you may hear during one's beginning steps in Lambda Calculus is that lambda calculus is Turing Complete. Now if you are anything like me, a bit a film buff, my first reaction to this phrase was thinking about Alan Turing, who was portrayed in the film, The Imitation Game (2014). This film shows Turing's contributions in creating the foundations of important computer science theories today, such as Artificial Intelligence and Machine Learning, with his paper \cite{Computing Machinery and Intelligence}, proposing the first question of if machines can think (I would highly recommend this movie, it was very well done and one of my favorites). Alongside  Turing's contributions to AI and Machine Learning, he also added his fair share to the advancement of programming languages and its theory as well with  Turing Complete and Turing Machines. 
 
 \medskip\noindent
- Turing Complete is a concept which essentially evaluates the capabilities of a programming language: is the language equipped to handle any and all sorts of algorithms? For example, HTML and JSON are not Turing Complete, as they cannot perform all sorts of algorithms. HTML is mainly used for website design and interface, whereas JSON is used to store structured data, making it easier for developers to pull data/information from. Below is a simple example of a HTML script that sets up the interface for addition between $m$ and $n$ while JavaScript is used to perform the operation itself:
+ Turing Completeness is a concept which essentially evaluates the capabilities of a programming language: is the language equipped to handle any and all sorts of algorithms? For example, HTML and JSON are not Turing Complete, as they cannot perform all sorts of algorithms. HTML is mainly used for website design and interface, whereas JSON is used to store structured data, making it easier for developers to pull data/information from. Below is a simple example of a HTML script that sets up the interface for addition between $m$ and $n$ while JavaScript is used to perform the operation itself:
  
  \begin{lstlisting}[language=html] 
 <input type="text" id="m"><br/>
@@ -721,7 +737,7 @@ A phrase you may hear during one's beginning steps in Lambda Calculus is that la
  Here we can see that without JavaScript (which is another programming language that can be integrated with HTML), the raw HTML code cannot perform an addition operation. Using the script functionality, it is able to utilize JavaScript, but there is no defined way for HTML on its own to perform any type of algorithm/operation. Although HTML and JSON are important to learn and provide a vital service, they do not have the capabilities to run algorithms such as mathematical operations or while loops. Without the functionality to perform computations, these languages cannot be considering  Turing Complete \cite{TC}. However, languages such as Python, Java, C++, and even Lambda Calculus are. It can be said that Lambda Calculus is the shortest and simplest programming language there is, but what exactly makes Lambda Calculus Turing Complete you may ask? 
 
 \medskip\noindent
-Even though Lambda Calculus is more abstract than other languages that you may be familiar with, such as Python or Java, it does pass this evaluation since it is a notation that represents functions and computations, with an input and an output. Since this is an algorithm, which takes an input to perform logic upon to produce an output, Lambda Calculus is Turing Complete. Another way to determine if a programming language is Turing Complete is if the language can replicate a Turing Machine \cite{Turing Completeness}.
+Even though Lambda Calculus is more abstract than other languages that you may be familiar with, such as Python or Java, it does pass this evaluation since it is a notation that represents functions and computations, with an input and an output. Since this is an algorithm, which takes an input to perform logic upon to produce an output, Lambda Calculus is Turing Complete. You may be wondering how exactly do you prove that Lambda Calculus is Turing Complete? Well, it is possible to write an interpreter in Lambda Calculus that can execute any Turing machine. Lambda Calculus is essentially rewriting expressions using beta reduction theory \cite{PL}. Now thinking about three concepts, Turing Machines, Lambda Calculus, and String Rewriting, how do all these concepts relate? Well, let us cover Turing Machines and string rewriting and revisit this question at the end of the section \cite{Turing Completeness}.
 
 \subsubsection{What is a Turing Machine}
  A Turing Machine is considered to be an abstract mathematical theorem that breaks down the definition of what programmers interpret computations to be \cite{Turing Completeness}. Next to Lambda Calculus, Turing Machines are the next simplest programming language there is which was invented to define what an algorithm is. It is also known as the simplest imperative language, which is a direct contrast to Lambda Calculus which is the simplest functional language. Now although it is misleading using the word machine in a concept that is said to be abstract, but let us learn a bit more about this concept to see how it can be considered to be a machine. Turing Machines are broken down into two aspects: a computational head and an extremely (infinitely) long tape \cite{Turing Completeness}. A key takeaway in this definition is that the tape is infinite. If finite, the tape would then, in theory, end, and the machine would stop performing calculations. Today, the tape can be interpreted as random access memory (RAM) or external memory such as a disk that every computer has and the head is a read and write interpreter that reads the information that is passed, records it, and decides which direction to move the tape. 
@@ -751,7 +767,7 @@ infinite_loop(1)
  The main question the Halting Problem proposes is does the function/program terminate given a certain input. In the Python example above, we see an example of an infinite loop, where the program would first print out "The number is greater than 2" and then run forever, printing "The number is less than 2" since it is under a while loop that never is False. Since the condition is always True, and will never be set to False, it continues printing the same statement forever. Although we have a clear example of what an infinite loop looks like, it is difficult to predict what type of algorithm would be passed through every Turing Machine. If a function is incomputable, then there is no Turing machine that can compute an output \cite{Turing Completeness}. Considering that Turing Complete is either a True/False or Yes/No question, where the language can be either Turing Complete or not, that makes the problem decidable. Since the Halting Problem deals with incomputable functions, that makes the problem undecidable.
  
 \medskip\noindent
-Now there steps for computer scientists to follow when determining if a function/program is a decidable or undecidable problem: 
+Now three steps for computer scientists to follow when determining if a function/program is a decidable or undecidable problem: 
 \begin{enumerate}
     \item There is a program and an input
     \item The program passes the the Halting Problem test if it terminates given the input
@@ -761,17 +777,454 @@ Now there steps for computer scientists to follow when determining if a function
 \medskip\noindent
 Other examples of undecidable problems in abstract computer science theory is the Busy Beaver Problem and Rice's Theorem \cite{Undecidable Problems}. Now when first being introduced to these concepts and theorems may be confusing, but remember that The Halting Problem simply asks the question does the program terminate given an input and if that is considered a Turing Machine. Having programs that run forever on a machine would not be cost efficient at all. Imagine having one machine that computes 1+1 all day, everyday, forever. This is why this question was and still is an important concept to be aware of when the engineering and computer science fields expanded and continues to grow. Ensuring the computers and future machines would have a way to handle these concerns was vital to the success of the field, since as we know today, we handle infinite loops by terminating the program ourselves from our terminal, using Control-C. 
 
-\subsection{String Rewriting}
+\subsection{Abstract Reduction Systems and String Rewriting}
 
-\subsubsection{Confluence, Normal Forms, Termination, Invariants}
-\subsubsection{Can we prove confluence automatically?}
+Abstract Reduction Systems is another important concept in programming languages theory that relates to computer interpreters and how our machines understands the code that programmer execute. When programmers run their code, the interpreter of the language essentially rewrites the code in order for the code to execute successfully. The idea behind string rewriting may bring up several questions, such as how to implement the rules and if the order of the rules effect the outcome. The best rewriting systems would allow for any order of execution, which is ideal for programmers as we would be able to reduce the expression in the order that works best for our understanding and leads to faster runtimes. It is possible to find the fastest runtime since it would be possible to find the computation order that runs the program the fastest \cite{PL}. Abstract Reduction Systems gives programmers the unique opportunity to inspect the question of order and runtime at the level of abstraction, which will be discussed further in the next section.
 
-\section{Project}
+\subsubsection{Abstract Reduction Systems and Trees}
 
-In this section you will describe a short project. It can either be in Haskell or of a theoretical nature,
+Abstract Reduction Systems (ARS) has two main components, a set and a relation. The set consists of the set of elements that is to be rewritten and the relation can be thought of as the rule or implementation for defining the one-step rewrites. In a mathematical sense, an abstract reduction system (ARS) is a set A together with a relation → $\subseteq$ A × A. The element A represents all forms of data types such as strings, lists, integers, floats, and more. The notation of ARS is important to grasp to understand how concepts such as reduction and rewriting works, such as → and $\rightarrow^*$ \cite{PL}.
 
-\section{Conclusions}\label{conclusions}
-Short conclusion. 
+\medskip\noindent
+In an ARS, given two elements, such as a and b, we use the symbol → to represent reduction. In other words,  ba → ab means that ba reduces to ab where → is a one-step computation that reduces (or simplifies) ba to ab. Given the string $abbabab$, to rewrite the string as $aaabbbb$, the system can compute a one-step computation for every first occurrence of $ba$ to move to the first of the string:
+
+\begin{center}
+    1. $abbabab$ → $ababbab$ \\
+    2. $ababbab$ → $aabbbab$ \\
+    3. $aabbbab$ → $aabbabb$ \\
+    4. $aabbabb$ → $aababbb$ \\
+    5. $aababbb$ → $aaabbbb$ \\
+\end{center}
+
+\noindent
+This process can also be easily implemented Python as well, using a Bubble Sort algorithm or the sorted built-in function in Python:
+
+\begin{lstlisting}[language=python] 
+
+#example of a rewrite in Python, using the concept of for every first occurrence of a to move to the front of the string using Bubble Sort
+def rewrite(str):
+
+    #string to list
+    rewrite_str = []
+    for i in str:
+        rewrite_str.append(i)
+    
+    #bubble sort
+    for i in range(len(str) - 1):
+        for j in range(len(str) - i - 1):
+            if rewrite_str[j] > rewrite_str[j + 1]:
+                rewrite_str[j], rewrite_str[j + 1] = rewrite_str[j + 1], rewrite_str[j]
+    
+    #list to string
+    new_str = ""
+    for i in rewrite_str:
+        new_str = new_str + i
+
+    print("The rewritten string is:", new_str)
+
+
+rewrite('abbabab')
+rewrite('adbbcabadb')
+
+#results:
+aaabbbb
+aaabbbbcdd
+
+\end{lstlisting}
+
+\noindent
+However, the ARS can follow all sort of rules to simplify for every last occurrence of $ba$ to move to the back of the string:
+
+\begin{center}
+    1. $abbabab$ → $abbaabb$ \\
+    2. $abbaabb$ → $abababb$ \\
+    3. $abababb$ → $abaabbb$ \\
+    4. $abaabbb$ → $aababbb$ \\
+    5. $aababbb$ → $aaabbbb$ \\
+\end{center}
+
+\medskip\noindent
+Another way to display this rewrite is with the use of a handy tool called an Abstract Syntax Tree (AST). Best compared to a binary search tree, an AST provides programmers a visual view of an ARS to find the all possible solutions, and see which one works best for the problem at hand. Keep in  mind that Figure 1 below shows an extremely clean AST, following the examples of the ARS above. AST typically would branch out to all possible versions of an outcome to visually display all paths that may be followed, similar to Figure 2.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=5cm]{ARS.png}
+    \caption{Abstract Syntax Tree of the two ARS examples above}
+    \label{fig:art}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=7cm]{ARS2.png}
+    \caption{Typical AST layout with multiple branches and paths}
+    \label{fig:art2}
+\end{figure}
+
+\medskip\noindent
+There are many different ways that an ARS can reduce a string to be in an ideal form, Now let us shift over to review concepts learned in mathematics, such as reflexive, symmetric, and transitive properties:
+
+\begin{enumerate}
+    \item Reflexivity revolves around the concept that for every real number (an element from set $\mathbb R$) $x$, $x = x$
+    \item Symmetricity revolves around the idea that for all real numbers (elements from set $\mathbb R$) $x$ and $y$, if $x = y$ then $y = x$ 
+    \item Transitivity states that for all real numbers (elements from set $\mathbb R$) $x$, $y$, and $z$ if $x = y$ and $y = x$, then $x = z$
+\end{enumerate}
+
+\medskip\noindent
+For ARS notation, $\rightarrow^*$ represents reflexive transitive closure. Essentially, this means the reflexive and transitive closure of → and $\longleftrightarrow^*$  for the symmetric, reflexive and transitive closure, that is the smallest equivalence relation containing $\rightarrow^*$. $\longleftrightarrow^*$ is the reflexive, symmetric and transitive closure of → (can also be denoted as a $\equiv$ b) \cite{PL}. These symbols will appear throughout programming language theory, especially when discussing ARS and is helpful to keep in mind going forward.
+
+\subsubsection{Confluence, Normal Forms, and Termination}
+
+Other terms and definitions that are key when discussing abstract reduction systems are confluence, normal forms, and termination \cite{PL}:
+
+\begin{enumerate}
+    \item Confluence relates to if $x$ reduces to $y$ and $z$, then $y$ and $z$ are about to join (or join-able) since $y$ and $z$ both reduce to the same element
+    \item Normal form is when $x$ if there is no reduction computation to be performed ($x$ → $y$)
+    \item Termination occurs if there is no infinite chain or loop
+\end{enumerate}
+
+\noindent
+Now this may be confusing at first without an application or visual to see how a set and relation is or is not confluent, terminating, or in normal form. Rather than explaining through words, Figures 3-6 show various applications visually that describe these concepts.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=12cm]{all3.png}
+    \caption{Graph that is confluent, terminating, and in normal form}
+    \label{fig:AST1}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=10cm]{cnf.png}
+    \caption{Graph that is confluent and in normal form}
+    \label{fig:AST2}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=10cm]{confluence.png}
+    \caption{Graph that is only confluent}
+    \label{fig:AST3}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=10cm]{terminating.png}
+    \caption{Graph that is only terminating}
+    \label{fig:AST4}
+\end{figure}
+
+\subsubsection{Graph descriptions}
+
+Now for a bit of explaining for each of the graphs to better understand what their meaning is. For all graphs, $A$ represents the set of elements that makes up the graphs and $R$ are the multiple relations that are displayed with the arrows. Figure 3 displays a graph that meets all 3 definitions above, as it is confluent, terminates, and is in normal form. Figure 3 has 5 elements and 5 relations, have no infinite loops (which indicts termination), in normal form, and for every fork, there is a join (which indicts confluence). Figure 4 shows an example of a graph that is non-terminating. Looking specifically at the relations $(a,c)$, $(c,e)$, and $(e,a)$, there is an infinite loop represent where it is possible to run $a$ → $c$ → $e$ → $a$ → $c$ ... forever, hence making this graph non-terminating. It does however, meet the definition of normal form and confluence where for every fork, there is a join. Figure 5 displays a graph which is both non-terminating and not in normal form. It is not terminating as there is an infinite loop constantly from either direction you may chose to go:  $a$ → $b$ → $d$ → $a$ → $b$ ... or  $a$ → $c$ → $d$ → $a$ → $c$ ... which continues forever. It is also not in normal form since there are outgoing arrows. Figure 6 only meets the termination definition, where it does end at one place and there is no infinite computation possible. It is not confluence since every fork does not have a join and not in normal form as well. These concepts may take a bit of time to get used to, but similar to Haskell, with a bit of practice and using visuals to draw out your understand, ARS and AST is a vital tool for programmers to be familiar with and use in the future.
+
+\subsubsection{Lambda Calculus and Turing Completeness}
+Let us now circle back to the question that we had in Section 3.2 about Lambda Calculus and if it is Turing Complete. We left off with asking how Turing Machines, Lambda Calculus, and String Rewriting relate to each other. Now that we have covered each topic, we can see some similarities. Turing Machines are equally expressive in Lambda Calculus since it can be reduced down to a Turing Machine. Lambda Calculus is equally expressive to Turing Machines as it can be reduced to Lambda Calculus. We know now that any Turing Machine can be represented as some form of a string rewriting system. The question now shifts over to whether all string rewriting systems can be implemented in Lambda Calculus. Recall in Assignment 2, we wrote an interpreter in Lambda Calculus (LambdaNat.cf), which served as the rules of string rewriting and used Haskell to bridge the gap by following the chain of: string rewriting → Haskell → Lambda Calculus. An interesting problem to tackle for the future (or next semesters report) would be to have a full mathematical proof to denote this verification, but for now, take a look at Assignment 2 and 3 for some interesting applications of this concept using Lambda Calculus and Haskell.
+
+\section{Project: Haskell Calculator GUI}
+
+As mentioned in Section 2.5, the project portion of this report will focus on creating a Calculator GUI interface in Haskell. Creating a calculator in Haskell is the beginning steps in this course to introduce key concepts of Haskell and programming language theory, such as the interpreter and parser. Haskell does not have many popular GUI interfaces that can be used, unlike Python, which has Flask, a popular micro web framework that integrates Python and HTML on the same file, but it does have a toolkit called \cite{Threepenny} which provides a GUI framework that uses the web browser as a display, which was first published in 2013 and has been revised earlier this year, in May 2021. The library allows programmers to utilize the HTML DOM alongside JavaScript events with Haskell code.
+
+\subsection{Inspiration and Documentation}
+Inspiration to pursue this project came from the first assignment of the course, where we created a Calculator to run in our terminal using the $echo "(1+2)^2 *3" | ./Calculator$ command in Haskell. During user testing, it was difficult to rewrite the same line of code to test out different formulas, which led into the question if there can be a way to create a GUI interface to run a Calculator in Haskell. Figure 7 displays the final product of the calculator, which after compiling, will display on the link http://127.0.0.1:8023. Those who have contributed to the Threepenny library provide amazing documentation and examples of how to use the framework on Github to help guide the process of learning this tool \cite{ThreepennyElectron} \cite{ThreepennyCalc} \cite{ThreepennyExample}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm]{Calculator Example.png}
+    \caption{Final Product of the Haskell Calculator using a GUI interface}
+    \label{fig:calc}
+\end{figure}
+
+\noindent
+The final product allows for users to perform addition, subtraction, multiplication, division, modulo division, and exponents. The default data type for this calculator are float, which allows for decimal calculations. CE is a functionality that clears the error message and C clears the current number and restarts to 0.
+
+\subsection{Code Setup}
+The set up this interface to run on your desktop is relatively simple, thanks to active Github user Aleksei Pirogov who provides documentation on how to run the Threepenny Haskell code using cabal \cite{ThreepennyCalc}. To run, simply pull from the final project repository on Github \cite{FinalProjectRepo} and run the two commands to interact with the application on http://127.0.0.1:8023:
+
+\begin{lstlisting}[language=Haskell] 
+cabal new-build
+cabal new-run threep
+\end{lstlisting}
+
+\medskip\noindent
+The code is split up into two files, $Main.hs$ and $Calculator.hs$, where $Calculator.hs$ focuses on handling the computational side of the program, such as performing the calculation and handling errors and $Main.hs$ focuses on the interface components and user interface, such as the buttons and the size of the output.
+
+\subsection{Calculator.hs Overview}
+
+Starting off with $Calculator.hs$, the file starts off with defining important function established in the program and defining vital data types:
+
+\begin{lstlisting}[language=Haskell]
+-- operations calculator can handle
+data Operation = Add | Sub | Mul | Div | Mod | Exp deriving (Show, Eq)
+
+-- data type of the numbers on the Calculator
+data Digit = Zero | One | Two | Three | Four | Five | Six | Seven | Eight | Nine deriving (Show, Eq)
+
+-- data type representing commands executed by calculator
+data Command = Digit Digit         -- number
+             | Dot                 -- decimal point
+             | Operation Operation -- operation
+             | Equal               -- =
+             | Clear               -- C
+             | ClearError          -- CE
+             deriving (Show, Eq)
+
+
+data State = FormulaA     Formula                   -- Formula register A
+           | EnteredAandOp Double  Operation          -- A, Op
+           | FormulaB     Double  Operation Formula -- A, Op, Formula register B
+           | Calculated    Double  Operation Double   -- A, Op, B
+           | Error         Double  String             -- A, Error Message
+           deriving (Show, Eq)
+
+\end{lstlisting}
+
+\noindent
+The first data type defined is the Operations that users can perform (addition, subtraction, multiplication, division, modulo, and exponential). The data type Digit is defined as well that represents the 10 digits (0-9) that appear on the application. The data type Command is used to define the buttons that users select on the calculator, such as if they select a Digit, the Equal sign (=), or the Clear symbol (C). State is used to handle the operation the users want to perform, such as when they input the first Digit (A), when they input the first Digit (A) and an Operation (Op) and when they input the second Digit (B). The answer the the formula is shown in Calculated or an Error is displayed if the computation is not possible. In order to convert our data type from a Integer to a Float, we defined the data type Formula, which takes in a String of the inputted Digit and a Boolean, which is True if the $.$ button is pressed. By default, the first variables, FormulaA is always set to 0 and False. 
+
+\begin{lstlisting}[language=Haskell]
+-- the digit as a string & boolean if there's a float number (dot is pressed)
+type Formula = (String, Bool)
+
+-- default Formula 
+instance Default State where
+  def = FormulaA ("0", False)
+\end{lstlisting}
+
+\noindent
+Next, the button labels are assigned to the Command, Digit, or Operation that they represent:
+
+\begin{lstlisting}[language=Haskell]
+-- taking a string and parsing to a command type
+parseInput :: String -> Command
+parseInput x = case x of
+  "0"  -> Digit Zero
+  "1"  -> Digit One
+  "2"  -> Digit Two
+  "3"  -> Digit Three
+  "4"  -> Digit Four
+  "5"  -> Digit Five
+  "6"  -> Digit Six
+  "7"  -> Digit Seven
+  "8"  -> Digit Eight
+  "9"  -> Digit Nine
+  "."  -> Dot
+  "+"  -> Operation Add
+  "-"  -> Operation Sub
+  "*"  -> Operation Mul
+  "/"  -> Operation Div
+  "%"  -> Operation Mod
+  "^"  -> Operation Exp
+  "="  -> Equal
+  "C"  -> Clear
+  "CE" -> ClearError
+  _    -> undefined
+\end{lstlisting}
+
+\noindent
+The same idea goes for the next portion of the code where the reserve takes place (Digit Zero → "0" and so on) for the code to assign the Command/Operation/Digit to the symbol, which is displayed in lines 88-109. There are also portions of code that handle type conversion (Formula to Double and Double to Formula). In order to process and execute the equation the user inputs, the code defines different operations that the users would be allowed to perform, such as selecting a Command such as Equal(applyCommand), inputting Digits (addDigit), inputting a float number (addDot), or selecting a certain operation (applyOp).
+
+\begin{lstlisting}[language=Haskell]
+-- compute the calculation/operation 
+processCommand :: Command -> State -> State
+processCommand cmd = case cmd of
+  Digit x      -> addDigit x
+  Dot          -> addDot
+  Operation op -> applyOp op
+  command      -> applyCommand command
+\end{lstlisting}
+
+\noindent
+The functions addDigit and addDot serve a vital role to the application since they define the type of number that is being computed and recognize and save the Digit that is selected by the user. addDigit is set up as a case statement, which handles when the user selects the first Digit, the second Digit, an Operation, and outputs the computed Digit at the end. addDot is called when the $.$ button is selected by the user where the variable FormulaB is used to save the trailing digits after the decimal point (FormulaB = 324 and FormulaA=5 in the number 5.324). These two variables are then concatenated together to represent the float number.
+
+\begin{lstlisting}[language=Haskell]
+addDigit :: Digit -> State -> State
+addDigit x s =
+  case s of
+    (FormulaA a)        -> FormulaA (update a)
+    (FormulaB a op b)   -> FormulaB a op (update b)
+    (EnteredAandOp a op) -> FormulaB a op (num x, False)
+    Calculated {}        -> FormulaA (num x, False)
+    _ -> s
+  where
+    update (a, False) = (ccc a (num x), False)
+    update (a, True)  = (ccc a (num x), True)   
+    num i = labels (Digit i)
+    ccc "0" "0" = "0" -- avoid to create leading 0 digits
+    ccc a b     = a ++ b
+
+-- addDot function to handle floats
+addDot :: State -> State
+addDot s =
+  case s of
+    (FormulaA a)            -> FormulaA (dotted a)
+    (FormulaB a op b)       -> FormulaB a op (dotted b)
+    _                        -> s
+  where
+    dotted (a, False) = (a ++ ".", True)
+    dotted (a, True) = (a, True)
+\end{lstlisting}
+
+\noindent
+The function performCalc serves as the core of the program. This is where the computation of the program takes place, where it will either generate an output or an error message. Below, it can be seen that performCalc takes in a Double, an Operation, and another Double data type and outputs either a String (as the error message) or a Double (as the output). If the user tries to perform division or modulo division by 0 (2/0), an error message will be printed instead to alert the user of the error. Otherwise, the mathematical operation will take place. Note that $Mod -> modu$ is the only function that does not point to a symbol. Instead it points to the function modu, that is displayed above performCalc. Since Double does not have the mod function but Integral does, the modu function changes the data type to an Integral to give us the expected result from modulo division. The output is then generated using $f$  $a$  $b$ where $f$ represents the function, and $a$ and $b$ represent the inputs. Notice how this syntax is similar to Lambda Calculus!
+
+\begin{lstlisting}[language=Haskell]
+-- adding a modulo function to the calculator 
+modu :: Double -> Double -> Double
+modu a b = fromIntegral $ mod (round a) (round b)
+
+-- setting up formula & getting output of an operation
+performCalc :: Double -> Operation -> Double -- A & operation & B
+          -> (String -> a) -- error 
+          -> (Double -> a) -- result
+          -> a 
+performCalc _ Div b calcError _  | b == 0 = calcError "Division by Zero!"
+performCalc _ Mod b calcError _  | b == 0 = calcError "Mod by Zero!"
+performCalc a op  b _ calcResult =
+  let f = case op of
+            Add -> (+)
+            Sub -> (-)
+            Mul -> (*)
+            Div -> (/)
+            Exp -> (**)
+            Mod -> modu
+  in calcResult $ f a b
+ \end{lstlisting}
+ 
+\noindent
+The last portions of $Calculator.hs$ focuses on handling the Operation or Command order that the user inputs to the program. If the user selects a Digit and hits multiple Operations, an error message will appear, which is handled by the code below. It ensures that the order of operations is syntactically correct and if it is not, it outputs an error for the user that it cannot perform an invalid operation. Without this code, the application would crash as there would be no proper way to keep track of order of operations and invalid commands. 
+
+\begin{lstlisting}[language=Haskell]
+-- operation 
+applyOp :: Operation -> State -> State
+applyOp op s =
+  case s of
+    (FormulaA a) -> EnteredAandOp (fromFormula a) op
+    (FormulaB a op' b) -> performCalc a op' (fromFormula b)
+                                     (Error a)
+                                     (`EnteredAandOp` op)
+    (EnteredAandOp a _) -> Error a "Invalid Operation"
+    (Calculated a _ _)  -> EnteredAandOp a op
+    _ -> s
+
+
+-- unary command (C, CE, or =)
+applyCommand :: Command -> State -> State
+applyCommand cmd s =
+  case (cmd, s) of
+    (ClearError, Error a _)         -> FormulaA (asFormula a)
+    (Clear,      _)                 -> def
+    (_,          Error _ _)         -> s
+    (Equal,      FormulaA _)       -> s
+    (Equal,      EnteredAandOp a _) -> Error a "Invalid Operation"
+    (Equal,      FormulaB  a op b) -> calc a op (fromFormula b)
+    (Equal,      Calculated a op b) -> calc a op b
+    _                               -> s
+  where
+    calc a op b = performCalc a op b
+                  (Error a)
+                  (\a' -> Calculated a' op b)
+ \end{lstlisting}
+ 
+\subsection{Main.hs Overview}
+Shifting over to the GUI portion of the code, Main.hs handles how the application looks and interacts on your browser. Using built-in packages, such as Graphics.UI.Threepenny and Graphics.UI.Threepenny.Core, Haskellers are able to display the code in simple interface that looks like a calculator on your phone. To set up the GUI interface, every Main.hs file must start with creating an entry point to start:
+
+\begin{lstlisting}[language=Haskell]
+-- entry point from main.js launch script
+main :: IO ()
+main = startGUI defaultConfig setup
+
+-- setup window layout and import css file
+setup :: Window -> UI ()
+setup win = void $ do
+  -- define page
+  _ <- return win # set title "Haskell Calculator"
+  UI.addStyleSheet win "layout.css"
+\end{lstlisting}
+
+\noindent
+After starting the GUI interface, the next step is to set up the window Ui as well. In this example, we set the title of the browser window to "Haskell Calculator" and added an css file to improve the UI of the calculator to be smoother and pleasing to look at. Next, the output box and button displays are initialized in the UI. The output box is defined as a regular textbox and the buttons are split into two parts: displaying a certain button and displaying all buttons in a table. First, we define the variable buttons to map to the buttonDefinitions, which consists of the layout of the buttons on the app. The next portion handles the HTML/CSS side of the button display which uses HTML elements to recreate a table grid.
+
+\begin{lstlisting}[language=Haskell]
+-- UI controls
+  outputBox <- UI.input
+                # set (attr "readonly") "true"
+                # set (attr "style") "text-align: right; min-width: 400px; min-height: 40px; font-size:24px"
+                # set (attr "align") "center"
+
+  -- button grid
+  buttons   <- mapM (mapM mkButton) buttonDefinitions
+
+  -- define page DOM with html combinators
+  _ <- getBody win # set (attr "style") "overflow: hidden; align: center" #+
+    [ UI.div #. "ui raised very padded text container segment" #+
+      [UI.table #+ [UI.row [UI.div #. "ui input" #+ [element outputBox]]] #+ 
+                    map (UI.row . map element) buttons]
+    ]
+\end{lstlisting}
+
+\noindent
+Next, we setup the connection of the buttons to its corresponding functionality in $Calculator.hs$. buttonMap maps the buttons to its function, clicks keeps track of what the user selects, commands calls the processCommand function in $Calculator.hs$, calcBehaviour keeps track of all the commands that the user is selecting, and outText displays the result or the error to the user. 
+
+\begin{lstlisting}[language=Haskell]
+let  
+      buttonMap = zip (concat buttons) (concatMap (map fst) buttonDefinitions)
+
+      -- register mouse click events to all buttons
+      clicks  = buttonClicks buttonMap
+
+      -- use processCommand function to build the equation
+      commands  = fmap processCommand clicks
+
+  -- calculate behaviour by accumulating all commands  
+  calcBehaviour <- accumB def commands
+
+  let outText  = fmap display calcBehaviour
+
+  -- output textbox
+  element outputBox # sink value outText
+ \end{lstlisting}
+
+\noindent
+Lastly, the end of $Main.hs$ focuses on how the buttons and table is displayed and wrap up the connection of the two files and process the Commands that are selected to run. mkButton represents the individual buttons and how they are displayed. buttonDefinitions focuses on how the table looks like on the application, where the order that it is defined in the variable is the same order/structure you see on the application. buttonClicks processes the clicks that the user selects and sends the inputs back to $Calculator.hs$. Finally, Color is a data type that was defined as the background text of the buttons. 
+
+\begin{lstlisting}[language=Haskell]
+-- button UI
+  where
+    mkButton :: (Command, Color) -> UI Element
+    mkButton (cmd, clr) =
+      let btnLabel = labels cmd -- get the button text
+      in  UI.button #. ("ui " ++ color clr ++ " button")
+                    # set text btnLabel # set value btnLabel
+                    # set (attr "type")  "button"
+                    # set (attr "style") "min-width: 80px; min-height: 60px; font-size: 24px"
+                    # set style [("color","blue")]
+
+    color :: Color -> String
+    color = map toLower . show
+
+    -- buttons on the app
+    buttonDefinitions :: [[(Command, Color)]]
+    buttonDefinitions =
+      [ [(Digit Seven, Grey), (Digit Eight, Grey), (Digit Nine,  Grey), (Operation Add, Grey), (Operation Sub, Grey)]
+      , [(Digit Four,  Grey), (Digit Five,  Grey), (Digit Six,   Grey), (Operation Mul, Grey), (Operation Div, Grey)]
+      , [(Digit One,   Grey), (Digit Two,   Grey), (Digit Three, Grey), (Operation Exp, Grey), (Operation Mod, Grey)]
+      , [(Dot,  Grey),        (Digit Zero,  Grey), (ClearError,   Grey), (Clear,        Grey), (Equal, Grey)] ]
+
+    -- function to handle when the button is clicked
+    buttonClicks :: [(Element, Command)] -> Event Command
+    buttonClicks = foldr1 (UI.unionWith const) . map makeClick
+      where
+        makeClick (elmnt, cmd) = UI.pure cmd <@ UI.click elmnt
+
+-- button background color
+data Color = Grey deriving (Show, Eq)  
+\end{lstlisting}  
+
+\subsection{Future Steps and Summary}
+By researching and following multiple tutorials, creating an GUI interface for an Haskell Calculator is successful! This was an interesting project to explore as it involved improving my understanding of Haskell and combining it with a HTML/CSS interface in a HTML/Haskell hybrid. As we saw in Assignment 1, Part 2, setting up an Interpreter.hs was easier than this approach as it had minimal lines of code, where we only wanted a terminal output. With this new approach, although more code is necessary to build this application, I believe that it would be very interesting for more students to conduct this sort of project and experiment with further improving the UI to see more fascinating results. 
+  
+\section{Conclusion}\label{conclusion}
+In conclusion, I greatly enjoyed this class and learning not only a different programming language, but a different style of thinking as well. Special shout out to Professor Kurz for an amazing semester and to Dan Haub for being a wonderful SI. My favorite part of this class was revisiting Discrete Mathematics and applying concepts we learned to actual code instead of paper (as it was in Discrete Mathematics) and the final project. Thank you for an amazing semester (and if anyone else reads this, I hope you are enjoying the class or just overall enjoying my paper) and greatly looking forward to next semester is Compiler Constructions to carry on the journey!
 
 \begin{thebibliography}{99}
 \bibitem[PL]{PL} \href{https://github.com/alexhkurz/programming-languages-2021/blob/main/README.md}{Programming Languages 2021}, Chapman University, 2021.
@@ -806,6 +1259,13 @@ Short conclusion.
 \bibitem[TC]{TC} \href{https://dev.to/gruhn/what-makes-a-programming-language-turing-complete-58fl}{Turing Complete}, dev.to, 2020.
 \bibitem[Turing Completeness]{Turing Completeness} \href{https://evinsellin.medium.com/what-exactly-is-turing-completeness-a08cc36b26e2}{Turing Completeness}, medium.com, 2017.
 \bibitem[Undecidable Problems]{Undecidable Problems} \href{https://en-academic.com/dic.nsf/enwiki/594998}{Undecidable Problem}, en-academic.com, 2021.
+\bibitem[CTNF]{CTNF} \href{https://hackmd.io/@GAbY-V7cQxaoWKC3MkfoxQ/SJjgAqkSK}{SI Worksheet 10/10/21}, hackmd.io, 2021.
+\bibitem[Threepenny]{Threepenny} \href{https://hackage.haskell.org/package/threepenny-gui}{threepenny-gui: GUI framework that uses the web browser as a display.}, hackage.haskell.org, 2021.
+\bibitem[ThreepennyElectron]{ThreepennyElectron} \href{https://github.com/thma/ThreepennyElectron}{Writing Haskell native GUI Applications with Threepenny GUI and Electron.}, github.com, 2021.
+\bibitem[ThreepennyExample]{ThreepennyExample} \href{https://github.com/HeinrichApfelmus/threepenny-gui/tree/master/samples}{Threepenny Example}, github.com, 2021.
+\bibitem[ThreepennyCalc]{ThreepennyCalc} \href{https://github.com/astynax/threep}{threep}, github.com, 2019.
+\bibitem[FinalProjectRepo]{FinalProjectRepo} \href{https://github.com/arshiasharma/cpsc354_report}{FinalProjectRepo}, github.com, 2021.
+
 
 \end{thebibliography}
 \end{document}
