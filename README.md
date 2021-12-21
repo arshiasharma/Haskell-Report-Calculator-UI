@@ -19,4 +19,4 @@ Sources used for the final project include:
 * http://wiki.haskell.org/Threepenny-gui
 * https://github.com/HeinrichApfelmus/threepenny-gui
 * https://github.com/astynax/threep
-* * https://github.com/thma/ThreepennyElectron
+* https://github.com/thma/ThreepennyElectron
