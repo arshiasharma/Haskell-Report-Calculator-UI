@@ -5,6 +5,7 @@ This repository contains the Latex file of my report, a PDF, and the final proje
 ## How to run the Final project
 To run the final project code, run the following commands:
 * cd FinalProject
+* cabal install threepenny-gui -fbuildExamples
 * cabal new-build
 * cabal new-run threep
 
